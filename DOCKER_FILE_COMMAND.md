@@ -134,7 +134,7 @@ ENV APP_ENV="development"
 # Multiple env
 ENV APP_PORT="8081" APP_NAME="web_server"
 RUN mkdir app/
-COPY ./* app/
+COPY . app/
 
 EXPOSE ${APP_PORT}
 CMD go run app/main.go
@@ -153,7 +153,7 @@ ENV APP_PORT="8081" APP_NAME="web_server" APP_LOG="app/log"
 
 RUN mkdir app/
 RUN mkdir -p ${APP_LOG}
-COPY ./* app/
+COPY . app/
 #Single file
 VOLUME ${APP_LOG}
 #Multiple
@@ -171,7 +171,7 @@ ENV APP_PORT="8081" APP_NAME="web_server" APP_LOG="app/log"
 
 RUN mkdir app/
 RUN mkdir -p ${APP_LOG}
-COPY ./* app/
+COPY . app/
 #Single file
 VOLUME ["${APP_LOG}"]
 #Multiple
@@ -179,3 +179,23 @@ VOLUME ["${APP_LOG}","app/temp/log"]
 EXPOSE ${APP_PORT}
 CMD go run app/main.go
 ```
+
+## Workdir Instructions
+- Seperti namanya 'WORKDIR' instruksi digunakan untuk mengubah direktori dimana program akan dijalankan. 'WORKDIR' instruksi juga berfungsi sebagai default direktori ketika kita masuk container pertama kali. 
+- Jika direktory tersebut tidak  ada maka autocreate jadi hati-hati dalam penggunaan nya
+-  Cara Penggunaan nya seperti perintah ```bash cd ``` akan sedikit berbeda .
+```Dockerfile
+FROM golang:1.18-alpine
+# Single env
+ENV APP_ENV="development"
+# Multiple env
+ENV APP_PORT="8081" APP_NAME="web_server"
+WORKDIR app
+# workdir app
+COPY . .
+
+EXPOSE ${APP_PORT}
+CMD go run main.go
+```
+- Jika kita perintah ```WORKDIR app/test``` maka kedua folder tersebut meski tidak ada tetap autocreate sehingga workdir nya app/test
+- Jika kita perintah lagi ``` WORKDIR /etc``` maka workdir nya berubah /etc
