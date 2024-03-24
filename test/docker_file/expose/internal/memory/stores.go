@@ -40,3 +40,12 @@ func (s *Stores) FindByID(id string) (*Item,error) {
 	return item,nil
 }
 
+func (s *Stores) FindAll() []*Item {
+	var items []*Item
+	s.m.Lock()
+	defer s.m.Unlock()
+	for _,item  := range s.DB {
+		items = append(items, item)
+	}
+	return items
+}
