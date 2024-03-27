@@ -28,4 +28,4 @@ docker container exec -i -t name_container /bin/bash
 docker container create --name name --publish or -p porthost:portcontainer image:tag
 # Multiple Port Forwarding
 docker container create --name name --publish or -p porthost:portcontainer --publish or -p porthost:portcontainer image:tag
-
+# Port Container harus sesuai dengan di docs image registry nya karena kalau tidak sesuai tidak bisa di jalankan
