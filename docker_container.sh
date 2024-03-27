@@ -26,5 +26,6 @@ docker container exec -i -t name_container /bin/bash
 # Container Port secara default hanya bisa di akses di dalam container yang bersifat isolation
 # Agar Bisa Mengakses Port dari Container dengan port forwarding
 docker container create --name name --publish or -p porthost:portcontainer image:tag
-
+# Multiple Port Forwarding
+docker container create --name name --publish or -p porthost:portcontainer --publish or -p porthost:portcontainer image:tag
 
