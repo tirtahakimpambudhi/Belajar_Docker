@@ -41,7 +41,12 @@ docker container create --name db_container_1 -p 3307:3306 --env or -e ENV_ROOT_
 docker container stats
 
 # Container Resource Limit
-docker container create --name container_1 --memory 100 (m,k,b,g) --cpus (decimal = 1.5,0.5 etc) image:tag
+docker container create --name name_container_1 --memory 100 (m,k,b,g) --cpus (decimal = 1.5,0.5 etc) image:tag
 # Jika Container sudah terlanjut dibuat tanpa resource limit bisa pakai update
-docker container update --memory 200m --memory-swap 400m --cpus 0.7 mongodb_container_1
+docker container update --memory 200m --memory-swap 400m --cpus 0.7 name_container_1
 # Harus Memperbarui Memory swap dan kondisi memory swap harus lebih besar dari memoy limit (ms>ml)
+
+
+# Bind Mount untuk melakukan file sharing antara host (os) kita dengan container
+docker container create --name name_container_1 --mount "type=bind,source=folder_host,destination=folder_container,readonly(optional)" image:tag
+
