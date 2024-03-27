@@ -29,3 +29,9 @@ docker container create --name name --publish or -p porthost:portcontainer image
 # Multiple Port Forwarding
 docker container create --name name --publish or -p porthost:portcontainer --publish or -p porthost:portcontainer image:tag
 # Port Container harus sesuai dengan di docs image registry nya karena kalau tidak sesuai tidak bisa di jalankan
+
+
+# Membuat Container dengan memasukan environment variable
+docker container create --name db_container_1 -p 3307:3306 --env or -e ENV_ROOT_PASSWORD=secret image:tag
+# Multiple env
+docker container create --name db_container_1 -p 3307:3306 --env or -e ENV_ROOT_USERNAME=user  --env or -e ENV_ROOT_PASSWORD=secret image:tag
