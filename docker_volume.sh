@@ -17,6 +17,9 @@ docker container create --name name_container -p port_host:port_container --moun
 # mount kedua bind mount destination nya di folder container bebas namanya dan sumber nya di taruh ke host agar ke sharing 
 3. tar cvf folder_containar_bind_dest/backup_name.tar.gz /folder_container_volume_det
 # masuk ke terminal dan masuk folder destination dari mount volume jadikan tar.gz dan di pindahkan ke destination mount bind agar ke sharing keluar
+Short Cut
+docker container run --rm --name backup_mongo_container  --mount "type=volume,source=mongodata,destination=/data_mongodb" --mount "type=bind,source=/home/tirtahakim/Documents/DOCKER_COMMAND/backup,destination=/backup_mongodb" ubuntu:latest tar cvf /backup_mongodb/backup_inline.tar.gz /data_mongodb
+
 
 # Restore Volume
 
