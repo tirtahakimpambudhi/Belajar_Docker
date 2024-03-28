@@ -25,4 +25,4 @@ docker container run --rm --name backup_mongo_container  --mount "type=volume,so
 # Restore Volume
 # Flow Bind mount folder_backup_host -> volume
 1. docker container stop # berhentikan container terlebih dahulu agar tidak ada perubahan
-2. docker container run --rm --name restore_mongo_container --mount "type=bind,source=folder_host_backup,destination=/backup" --mount "type=volume,source=new_volume,destination=/data" ubuntu:latest bash -c "cd /data && tar xfv backup/backup_file.tar.gz --strip 1"
+2. docker container run --rm --name restore_mongo_container --mount "type=bind,source=folder_host_backup,destination=/backup" --mount "type=volume,source=new_volume,destination=/data" ubuntu:latest bash -c "cd /data && tar xfv /backup/backup_file.tar.gz --strip 1"
