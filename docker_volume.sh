@@ -9,7 +9,8 @@ docker volume rm name_volume # Container Harus Berhenti
 #Container Volume
 docker container create --name name_container -p port_host:port_container --mount "type=volume,source=name_volume,destination=folder_container,readonly(optional)"  --memory --cpus image:tag
 
-# Backup Volume
+# Backup Volume 
+# Flow Volume -> bind mount folder host
 1. docker container stop # berhentikan container terlebih dahulu agar tidak ada perubahan
 2. docker create --name backup_container --mount "type=volume,source=name_volume,destination=folder_container" --mount "type=bind,source=folder_host,destination=folder_container" image:tag # buat container baru dengan 2 mount volume yang ingin kita backup dan bind sistme host
  run --rm #agar setelah berhenti langsung kehapus container nya
@@ -22,4 +23,6 @@ docker container run --rm --name backup_mongo_container  --mount "type=volume,so
 
 
 # Restore Volume
-
+# Flow Bind mount folder_backup_host -> volume
+1. docker container stop # berhentikan container terlebih dahulu agar tidak ada perubahan
+2. docker container run --rm --name restore_mongo_container --mount "type=bind,source=folder_host_backup,destination=/backup" --mount "type=volume,source=new_volume,destination=/data" ubuntu:latest bash -c "cd /data && tar xfv backup/backup_file.tar.gz --strip 1"
