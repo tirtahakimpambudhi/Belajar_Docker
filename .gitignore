@@ -3,3 +3,5 @@ db/
 
 # Ignore file-file dengan ekstensi ".sh"
 *.sh
+
+backup/
