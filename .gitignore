@@ -4,3 +4,5 @@ db/
 *.sh
 # Ignore Backup
 backup/
+
+# Help Me
