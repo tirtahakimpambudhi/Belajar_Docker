@@ -93,6 +93,7 @@ docker container update --memory 200m --memory-swap 400m --cpus 0.7 name_contain
 ```bash
 docker container create --name name_container_1 --mount "type=bind,source=folder_host,destination=folder_container,readonly(optional)" image:tag
 ```
+
 ## Docker Volume
 ```bash
 docker volume ls #Melihar Volume
