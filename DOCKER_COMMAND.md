@@ -211,7 +211,7 @@ docker network connect name_network name_container
 docker enum(network,container,image,volume) inspect name_(network,container,image,volume)
 ```
 
-#Docker Prune
+# Docker Prune
 ### Untuk Penghapusan Suatu network,container,image dan volume yang sudah tidak digunakan secara otomatis
 ```bash
 docker enum(network,container,image,volume) prune 
