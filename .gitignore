@@ -1,2 +1,5 @@
+# Ignore folder "db" dan semua isinya
 db/
+
+# Ignore file-file dengan ekstensi ".sh"
 *.sh
