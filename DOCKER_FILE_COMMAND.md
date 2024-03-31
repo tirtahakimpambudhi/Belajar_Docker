@@ -5,7 +5,15 @@
 ```bash
 docker build -t name_image folder_in_dockerfile_exist
 ```
-
+- Untuk Menampikan Output dari sebuah Dockerfile ketika jadi image 
+```bash
+docker build -t name_image folder_in_dockerfile_exist --progress=plain
+```
+- Saat Proses build docker secara default menyimpan perubahan Dockerfile di cache jadi ketika anda mencoba build ulang tanpa ada perubahan docker tidak akan build ulang secara manual 
+- Akan tetapi tetapi ketika ingin build ulang secara manual pakai command 
+```bash
+docker build -t name_image folder_in_dockerfile_exist --no-cache
+```
 
 ## From Instructions
 - Digunakan untuk statment awal ketika ingin menggunakan image docker dari docker registry (docker hub)
