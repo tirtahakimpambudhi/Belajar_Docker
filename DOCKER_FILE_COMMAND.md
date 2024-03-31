@@ -65,3 +65,42 @@ RUN ["echo","APP_ENV='development'",">",".env"]
 # CMD ["command","argument","argument"]
 CMD ["cat",".env"]
 ```
+
+## Label Insturctions
+- Label insturksi ini berfungsi menambahkan detail informasi tentang image nya seperti author,company,email,dll.
+- Label instruksi tidak terlalu berpengaruh di docker image nya. Dan Jika ingin melihat label perlu command 
+``` docker image inspect name_image:tag```
+- Contoh Penggunaan
+```Dockerfile
+FROM alpine:latest
+# LABEL key="value"
+LABEL author="example"
+LABEL github="https://github.com/example" email="example@gmail.com"
+
+CMD echo "Label Instruksi"
+```
+
+
+## Add Instructions
+- Add Instruksi digunakan untuk menambahkan file dari source ke destination 
+- source nya bisa berupa file dari host , url. Dan jika file nya berupa archive akan di ekstrak secara otomatis di destionation nya. Dan jika berupa url akan download secara otomatis juga
+```Dockerfile
+FROM alpine:latest
+# ADD source destination
+RUN mkdir document
+ADD folder_host/file.txt document
+ADD folder_host/*.txt document
+CMD echo file.txt
+```
+
+## Copy Instructions
+- Fungsi dari Copy instruksi persis dengan add tapi hanya bisa benar-benar copy file source ke destination dan tidak memiliki fitur lain nya
+- Best Practice Programmer Docker biasa nya pakai COPY. Sebisa mungkin Pakai COPY
+```Dockerfile
+FROM alpine:latest
+# COPY source destination
+RUN mkdir document
+COPY folder_host/file.txt document
+COPY folder_host/*.txt document
+CMD echo file.txt
+```
