@@ -5,4 +5,9 @@ db/
 # Ignore Backup
 backup/
 *.tar.gz
+*.png
+*.js
+*.php
+*.py
+*.go
 # Help Me
