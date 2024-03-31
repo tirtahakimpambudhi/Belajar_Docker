@@ -1,5 +1,8 @@
 FROM golang:1.18-alpine
 
-RUN mkdir app
-RUN echo "package main \nimport \"fmt\"\nfunc main(){fmt.Println(\"Hello World\")}" > main.go
-CMD go run main.go
+RUN mkdir /app && \
+    echo "package main" > /app/main.go && \
+    echo "import \"fmt\"" >> /app/main.go && \
+    echo "func main() { fmt.Println(\"Hello, World!\") }" >> /app/main.go
+
+CMD go run /app/main.go
