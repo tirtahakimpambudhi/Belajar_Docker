@@ -32,11 +32,36 @@ FROM alpine:latest
 # RUN command argument
 RUN mkdir app #untuk membuat directory
 RUN cd app/ #untuk masuk directory app
-RUN touch .env
+RUN echo APP_ENV="deveploment" > .env
 ```
 - Contoh Penggunaan yang Kedua
 ```Dockerfile
 FROM alpine:latest
 # RUN ["command","argument","argument"]
-
+RUN ["mkdir","app"]
+RUN ["cd","app"]
+RUN ["echo","APP_ENV='development'",">",".env"]
+```
+## CMD Instructions 
+- Fungsi nya sama dengan 'RUN' Instruksi akan tetapi 'CMD' dijalankan ketika container sedang berjalan atau setiap perintah jalan nya container
+- Akan tetapi 'CMD' Instruksi hanya boleh satu jadi ketika ditulis lebih dari satu maka yang dijalankan yang paling akhit
+- Contoh Penggunaan Pertama
+```Dockerfile
+FROM alpine:latest
+# RUN command argument
+RUN mkdir app #untuk membuat directory
+RUN cd app/ #untuk masuk directory app
+RUN echo APP_ENV="deveploment" > .env
+# CMD command argument
+CMD cat .env
+```
+- Contoh Penggunaan Kedua
+```Dockerfile
+FROM alpine:latest
+# RUN ["command","argument","argument"]
+RUN ["mkdir","app"]
+RUN ["cd","app"]
+RUN ["echo","APP_ENV='development'",">",".env"]
+# CMD ["command","argument","argument"]
+CMD ["cat",".env"]
 ```
