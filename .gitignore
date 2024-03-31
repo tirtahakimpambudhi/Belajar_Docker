@@ -4,5 +4,5 @@ db/
 *.sh
 # Ignore Backup
 backup/
-
+*.tar.gz
 # Help Me
