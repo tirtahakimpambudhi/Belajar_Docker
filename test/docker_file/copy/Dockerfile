@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN mkdir app/upload
+RUN mkdir -p app/upload
 COPY upload/* app/upload
 
 
