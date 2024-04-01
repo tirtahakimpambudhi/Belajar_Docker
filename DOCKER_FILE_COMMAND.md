@@ -104,3 +104,21 @@ COPY folder_host/file.txt document
 COPY folder_host/*.txt document
 CMD echo file.txt
 ```
+
+## Expose Instructions
+- Berfungsi untuk menambah detail informasi atau dokumentasi bahwa image tersebut berjalan di port sekian
+- Sebernarnya Expose instruksi tidak berpengaruh image tersebut harus berjalan di port itu hanya bersifat dokumentasi saja.
+- Contoh Penggunaan
+```Dockerfile
+FROM golang:1.18-alpine
+
+RUN mkdir app/
+COPY main.go app/
+
+EXPOSE 8081 tcp
+CMD go run app/main.go
+# EXPOSE port (tcp,udp)
+```
+
+## Env Instructions
+- Berfungsi menambahkan enviroment variabel di image tersebut. Dan enviroment variabel tersebut bisa dirubah ketika saat pembuatan container memakai flag ```-e atau --env```
