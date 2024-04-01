@@ -105,6 +105,10 @@ COPY folder_host/*.txt document
 CMD echo file.txt
 ```
 
+## .dockerignore
+- Fungsi dari .dockerignore persis sama dengan .gitignore yaitu mengignore file-file yang ditulis . Jadi saat build Dockerfile ke image sebenarnya yang di load pertama kali .dockerignore agar dilihat file file apa saja yang di ignore.
+- Alasan ada nya .dockerignore untuk mengignore file tertentu saat melakukan ADD atau COPY instruksi agar file - file tertentu tidak ikut ke build jadi image 
+
 ## Expose Instructions
 - Berfungsi untuk menambah detail informasi atau dokumentasi bahwa image tersebut berjalan di port sekian
 - Sebernarnya Expose instruksi tidak berpengaruh image tersebut harus berjalan di port itu hanya bersifat dokumentasi saja.
