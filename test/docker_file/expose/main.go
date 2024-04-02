@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/google/uuid"
 )
@@ -46,6 +47,10 @@ func getRequestJSON(w http.ResponseWriter, r *http.Request, field any) {
 }
 
 func main() {
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = "8081"
+	}
 	stores := make(map[string]*item)
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /item", func(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +65,7 @@ func main() {
 		writeJSON(w, http.StatusOK, &generalResponse{Message: "successfuly create new items", Data: map[string]string{
 			"id": id,
 		}})
+		return
 	})
 	mux.HandleFunc("GET /items", func(w http.ResponseWriter, r *http.Request) {
 		var items []*item
@@ -84,5 +90,5 @@ func main() {
 		return
 	})
 	fmt.Println("Start")
-	http.ListenAndServe(":8081", mux)
+	http.ListenAndServe(fmt.Sprintln(":%s",port), mux)
 }
