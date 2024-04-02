@@ -9,5 +9,5 @@ backup/
 *.js
 *.php
 *.py
-
+upload/
 # Help Me
