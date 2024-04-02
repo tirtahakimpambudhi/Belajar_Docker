@@ -19,6 +19,11 @@ type currency struct {
 	Symbol string  `json:"symbol"`
 }
 
+type generalResponse struct {
+	Message string 		`json:"message"`
+	Data any			`json:"data"`
+}
+
 func writeJSON(w http.ResponseWriter, code int, data any) {
 	dataJSON, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
@@ -30,13 +35,28 @@ func writeJSON(w http.ResponseWriter, code int, data any) {
 	w.Write(dataJSON)
 }
 
+func getRequestJSON(w http.ResponseWriter,r *http.Request, field any) {
+	err := json.NewDecoder(r.Body).Decode(&field)
+	if err != nil {
+		http.Error(w, "Failed to decode request body", http.StatusBadRequest)
+		return
+	}
+}
+
 func main() {
 	stores := make(map[string]*item)
 	mux := http.NewServeMux()
+	mux.HandleFunc("POST /item",func(w http.ResponseWriter, r *http.Request) {
+		var requestBody item
+		getRequestJSON(w,r,&requestBody)
+	
+		fmt.Println("Received JSON data:", requestBody)
+		fmt.Fprintln(w,"hello")
+	})
 	mux.HandleFunc("GET /items", func(w http.ResponseWriter, r *http.Request) {
 		var items []*item
 		if len(stores) == 0 {
-			fmt.Fprint(w,"items is empty")
+			writeJSON(w,http.StatusNotFound,&generalResponse{Message: "items is empty", Data: nil})
 			return
 		}
 		for _, item := range stores {
@@ -49,12 +69,12 @@ func main() {
 		id := r.PathValue("id")
 		item, ok := stores[id]
 		if !ok {
-			http.Error(w, fmt.Sprintf("item with id %s not found", id), http.StatusNotFound)
+			writeJSON(w,http.StatusNotFound,&generalResponse{Message: fmt.Sprintf("item with id %s not found", id),Data: nil})
 			return
 		}
 		writeJSON(w,http.StatusOK,item)
 		return
 	})
-	http.ListenAndServe(":8081", mux)
 	fmt.Println("Start")
+	http.ListenAndServe(":8081", mux)
 }
