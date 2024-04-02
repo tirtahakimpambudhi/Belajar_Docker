@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 type item struct {
@@ -20,8 +22,8 @@ type currency struct {
 }
 
 type generalResponse struct {
-	Message string 		`json:"message"`
-	Data any			`json:"data"`
+	Message string `json:"message"`
+	Data    any    `json:"data"`
 }
 
 func writeJSON(w http.ResponseWriter, code int, data any) {
@@ -35,7 +37,7 @@ func writeJSON(w http.ResponseWriter, code int, data any) {
 	w.Write(dataJSON)
 }
 
-func getRequestJSON(w http.ResponseWriter,r *http.Request, field any) {
+func getRequestJSON(w http.ResponseWriter, r *http.Request, field any) {
 	err := json.NewDecoder(r.Body).Decode(&field)
 	if err != nil {
 		http.Error(w, "Failed to decode request body", http.StatusBadRequest)
@@ -46,33 +48,39 @@ func getRequestJSON(w http.ResponseWriter,r *http.Request, field any) {
 func main() {
 	stores := make(map[string]*item)
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /item",func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /item", func(w http.ResponseWriter, r *http.Request) {
 		var requestBody item
-		getRequestJSON(w,r,&requestBody)
-	
-		fmt.Println("Received JSON data:", requestBody)
-		fmt.Fprintln(w,"hello")
+		getRequestJSON(w, r, &requestBody)
+		if requestBody.Name == "" || requestBody.Qtt == 0 || requestBody.Price == nil {
+			writeJSON(w,http.StatusBadRequest,&generalResponse{Message: "invalid argument",Data: nil})
+			return
+		}
+		id := uuid.NewString()
+		stores[id] = &requestBody
+		writeJSON(w, http.StatusOK, &generalResponse{Message: "successfuly create new items", Data: map[string]string{
+			"id": id,
+		}})
 	})
 	mux.HandleFunc("GET /items", func(w http.ResponseWriter, r *http.Request) {
 		var items []*item
 		if len(stores) == 0 {
-			writeJSON(w,http.StatusNotFound,&generalResponse{Message: "items is empty", Data: nil})
+			writeJSON(w, http.StatusNotFound, &generalResponse{Message: "items is empty", Data: nil})
 			return
 		}
 		for _, item := range stores {
-			items = append(items, item)	
+			items = append(items, item)
 		}
-		writeJSON(w,http.StatusOK,items)
+		writeJSON(w, http.StatusOK, items)
 		return
 	})
 	mux.HandleFunc("GET /item/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("id")
 		item, ok := stores[id]
 		if !ok {
-			writeJSON(w,http.StatusNotFound,&generalResponse{Message: fmt.Sprintf("item with id %s not found", id),Data: nil})
+			writeJSON(w, http.StatusNotFound, &generalResponse{Message: fmt.Sprintf("item with id %s not found", id), Data: nil})
 			return
 		}
-		writeJSON(w,http.StatusOK,item)
+		writeJSON(w, http.StatusOK, item)
 		return
 	})
 	fmt.Println("Start")
