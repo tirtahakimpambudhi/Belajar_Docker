@@ -1,6 +1,7 @@
 package memory
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/google/uuid"
@@ -28,4 +29,13 @@ func (s *Stores) Save(item *Item)  {
 	s.m.Lock()
 	defer s.m.Unlock()
 	s.DB[uuid.NewString()] = item
+}
+func (s *Stores) FindByID(id string) (*Item,error) {
+	s.m.Lock()
+	defer s.m.Unlock()
+	item , ok := s.DB[id]
+	if !ok {
+		return nil,fmt.Errorf("item with id %s not found",id)
+	}
+	return item,nil
 }

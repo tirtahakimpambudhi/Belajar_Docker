@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-func writeJSON(w http.ResponseWriter, code int, data any) {
+func WriteJSON(w http.ResponseWriter, code int, data any) {
 	dataJSON, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
 		http.Error(w, "error converting data to JSON", http.StatusInternalServerError)
