@@ -44,7 +44,7 @@ RUN ["echo","APP_ENV='development'",">",".env"]
 ```
 ## CMD Instructions 
 - Fungsi nya sama dengan 'RUN' Instruksi akan tetapi 'CMD' dijalankan ketika container sedang berjalan atau setiap perintah jalan nya container
-- Akan tetapi 'CMD' Instruksi hanya boleh satu jadi ketika ditulis lebih dari satu maka yang dijalankan yang paling akhit
+- Akan tetapi 'CMD' Instruksi hanya boleh satu jadi ketika ditulis lebih dari satu maka yang dijalankan yang paling akhir
 - Contoh Penggunaan Pertama
 ```Dockerfile
 FROM alpine:latest
