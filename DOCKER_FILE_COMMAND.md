@@ -126,3 +126,36 @@ CMD go run app/main.go
 
 ## Env Instructions
 - Berfungsi menambahkan enviroment variabel di image tersebut. Dan enviroment variabel tersebut bisa dirubah ketika saat pembuatan container memakai flag ```-e atau --env```
+
+```Dockerfile
+FROM golang:1.18-alpine
+# Single env
+ENV APP_ENV="development"
+# Multiple env
+ENV APP_PORT="8081" APP_NAME="web_server"
+RUN mkdir app/
+COPY ./* app/
+
+EXPOSE ${APP_PORT}
+CMD go run app/main.go
+```
+
+## Volume Instructions
+- Berfungsi untuk membuat volume secara otomatis saat membuat container 
+- Semua isi file yang di deklarasikan di volume Dockerfile akan di copy di docker volume yang dibuat secara otomatis tadi
+- Contoh Pertama
+```Dockerfile
+FROM golang:1.18-alpine
+# Single env
+ENV APP_ENV="development"
+# Multiple env
+ENV APP_PORT="8081" APP_NAME="web_server" APP_LOG="app/log"
+
+RUN mkdir app/
+RUN mkdir -p ${APP_LOG}
+COPY ./* app/
+
+VOLUME ${APP_LOG}
+EXPOSE ${APP_PORT}
+CMD go run app/main.go
+```
