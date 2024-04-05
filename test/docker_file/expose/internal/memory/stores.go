@@ -8,6 +8,7 @@ import (
 )
 
 type Item struct {
+	ID    string    `json:"id"`
 	Name  string    `json:"name"`
 	Qtt   int       `json:"quantity"`
 	Price *Currency `json:"price"`
@@ -31,8 +32,10 @@ func NewStores() *Stores {
 
 func (s *Stores) Save(item *Item)  {
 	s.m.Lock()
-	defer s.m.Unlock()
-	s.DB[uuid.NewString()] = item
+	defer s.m.Unlock() 
+	id := uuid.NewString()
+	item.ID = id
+	s.DB[id] = item
 }
 func (s *Stores) FindByID(id string) (*Item,error) {
 	s.m.Lock()
