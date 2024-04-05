@@ -15,6 +15,7 @@ func main() {
 	}
 	mux := http.NewServeMux()
 	handl := handler.NewItemHandler()
+	
 	mux.HandleFunc("GET /item/{id}",handl.GetItemByID)
 	mux.HandleFunc("GET /items",handl.GetAll)
 	fmt.Println("Start")
