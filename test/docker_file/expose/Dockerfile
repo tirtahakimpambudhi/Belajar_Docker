@@ -1,8 +1,7 @@
-FROM golang:1.18-alpine
+FROM golang:1.22-alpine
 
 RUN mkdir app/
-COPY ./* app/
-RUN go mod tidy
+COPY . app/
 
 EXPOSE 8081 3500 
-CMD [ "go" , "run" , "main.go" ]
+CMD cd app/ && go mod tidy && go run main.go
