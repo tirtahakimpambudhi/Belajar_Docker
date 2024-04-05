@@ -25,6 +25,10 @@ type Stores struct {
 	m sync.Mutex
 }
 
+func NewStores() *Stores {
+	return &Stores{DB: make(map[string]*Item)}
+}
+
 func (s *Stores) Save(item *Item)  {
 	s.m.Lock()
 	defer s.m.Unlock()
