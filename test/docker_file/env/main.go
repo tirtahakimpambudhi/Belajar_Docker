@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go_expose/internal/handler"
-	"go_expose/internal/log"
-	"go_expose/internal/middleware"
+	"go_env/internal/handler"
+	"go_env/internal/log"
+	"go_env/internal/middleware"
 	"log/slog"
 	"net/http"
 	"os"
@@ -24,6 +24,5 @@ func main() {
 	logging := middleware.NewLogging(slog.New(log.NewHandler(nil)))
 	loggingMiddleware := logging.LoggingMiddleware(mux)
 	recoverMiddleware := middleware.RecoverMiddleware(loggingMiddleware)
-	fmt.Println("Start")
 	http.ListenAndServe(fmt.Sprintf(":%s",port), recoverMiddleware)
 }

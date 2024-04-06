@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"go_expose/internal/memory"
-	helperJson "go_expose/pkg/json"
+	"go_env/internal/memory"
+	helperJson "go_env/pkg/json"
 	"net/http"
 
 	"github.com/google/uuid"
