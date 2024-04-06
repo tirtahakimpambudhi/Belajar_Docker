@@ -5,5 +5,4 @@ ENV APP_PORT=8081
 RUN mkdir app/
 COPY . app/
 
-
-CMD 
+CMD cd app/ && go mod tidy && go run main.go
