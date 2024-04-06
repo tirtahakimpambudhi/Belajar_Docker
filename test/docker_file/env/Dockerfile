@@ -1,6 +1,6 @@
 FROM golang:1.22-alpine
 
-ENV APP_PORT=8081 
+ENV APP_PORT=8081 APP_LOG=app/log
 
 RUN mkdir app/
 COPY . app/
