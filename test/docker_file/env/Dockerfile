@@ -5,3 +5,5 @@ ENV APP_PORT=8081
 RUN mkdir app/
 COPY . app/
 
+
+CMD 
