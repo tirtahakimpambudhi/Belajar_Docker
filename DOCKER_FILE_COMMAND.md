@@ -154,8 +154,28 @@ ENV APP_PORT="8081" APP_NAME="web_server" APP_LOG="app/log"
 RUN mkdir app/
 RUN mkdir -p ${APP_LOG}
 COPY ./* app/
-
+#Single file
 VOLUME ${APP_LOG}
+#Multiple
+VOLUME ${APP_LOG} app/temp/log
+EXPOSE ${APP_PORT}
+CMD go run app/main.go
+```
+- Contoh Kedua 
+```Dockerfile
+FROM golang:1.18-alpine
+# Single env
+ENV APP_ENV="development"
+# Multiple env
+ENV APP_PORT="8081" APP_NAME="web_server" APP_LOG="app/log"
+
+RUN mkdir app/
+RUN mkdir -p ${APP_LOG}
+COPY ./* app/
+#Single file
+VOLUME ["${APP_LOG}"]
+#Multiple
+VOLUME ["${APP_LOG}","app/temp/log"]
 EXPOSE ${APP_PORT}
 CMD go run app/main.go
 ```
