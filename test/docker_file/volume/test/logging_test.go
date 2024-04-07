@@ -1,14 +1,16 @@
 package test
 
 import (
+	"go_volume/internal/logging"
 	"io"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"testing"
-    "github.com/sirupsen/logrus"
-    "time"
-    "gopkg.in/natefinch/lumberjack.v2"
-    "path/filepath"
+	"time"
+
+	"github.com/sirupsen/logrus"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 type TeeWriter struct {
@@ -67,4 +69,10 @@ func TestRotateLog(t *testing.T) {
    log.SetOutput(multiWriter)
 
    log.Info("Info ne masseh")
+}
+
+func TestInternalLogger(t *testing.T) {
+    log := logging.SetupLogger()
+    log.Info("Info")
+    log.Error("Ini Error")
 }
