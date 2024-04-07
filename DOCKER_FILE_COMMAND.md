@@ -161,6 +161,7 @@ VOLUME ${APP_LOG} app/temp/log
 EXPOSE ${APP_PORT}
 CMD go run app/main.go
 ```
+- ```VOLUME /path_container #untuk mounting```
 - Contoh Kedua 
 ```Dockerfile
 FROM golang:1.18-alpine
