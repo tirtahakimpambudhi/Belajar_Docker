@@ -58,9 +58,10 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter , r *http.Request) {
 }
 
 func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
+	var items []*memory.Item
 	const total = 10
-	var wg *sync.WaitGroup
-	codes , err := i.seed(wg, total)
+	var wg sync.WaitGroup
+	codes , err := i.seed(&wg, total)
 	wg.Wait()
 	for _, code := range codes {
 		if code == http.StatusInternalServerError {
@@ -75,7 +76,8 @@ func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
 	recorder := httptest.NewRecorder()
 	i.GetAll(recorder,request)
 	body , _ := io.ReadAll(recorder.Result().Body)
-	helperJson.WriteJSON(w,recorder.Result().StatusCode,&generalResponse{Message: "test",Data: string(body)})
+	json.Unmarshal(body,&items)
+	helperJson.WriteJSON(w,recorder.Result().StatusCode,&generalResponse{Message: "test",Data: items})
 }
 
 
