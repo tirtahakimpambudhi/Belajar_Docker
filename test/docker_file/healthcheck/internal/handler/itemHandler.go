@@ -26,77 +26,81 @@ func NewItemHandler() *ItemHandler {
 	return &ItemHandler{Stores: memory.NewStores()}
 }
 
-func (i *ItemHandler) GetItemByID(w http.ResponseWriter, r *http.Request)  {
+func (i *ItemHandler) GetItemByID(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
 	_, err := uuid.Parse(id)
 	if err != nil {
-		helperJson.WriteJSON(w,http.StatusBadRequest,&generalResponse{Data: nil , Message: err.Error()})
+		helperJson.WriteJSON(w, http.StatusBadRequest, &generalResponse{Data: nil, Message: err.Error()})
 		return
 	}
 	item, err := i.Stores.FindByID(id)
 	if err != nil {
-		helperJson.WriteJSON(w,http.StatusNotFound,&generalResponse{Data: nil , Message: err.Error()})
+		helperJson.WriteJSON(w, http.StatusNotFound, &generalResponse{Data: nil, Message: err.Error()})
 		return
 	}
-	helperJson.WriteJSON(w,http.StatusOK,&generalResponse{Data: item, Message: "successfully get id"})
+	helperJson.WriteJSON(w, http.StatusOK, &generalResponse{Data: item, Message: "successfully get id"})
 }
 
-func (i *ItemHandler) GetAll(w http.ResponseWriter, r *http.Request)  {
+func (i *ItemHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	items := i.Stores.FindAll()
-	helperJson.WriteJSON(w,http.StatusOK,&generalResponse{Data: items, Message: "successfully get all"})
+	helperJson.WriteJSON(w, http.StatusOK, &generalResponse{Data: items, Message: "successfully get all"})
 }
 
-func (i *ItemHandler) CreateItems(w http.ResponseWriter , r *http.Request) {
+func (i *ItemHandler) CreateItems(w http.ResponseWriter, r *http.Request) {
 	var item memory.Item
 	err := helperJson.DecodeJSONBody(w, r, &item)
-	if m,ok := err.(*helperJson.MalformedRequest);err != nil && ok {
-		helperJson.WriteJSON(w,m.GetStatus(),&generalResponse{Data: nil,Message: m.GetMessage()})
+	if m, ok := err.(*helperJson.MalformedRequest); err != nil && ok {
+		helperJson.WriteJSON(w, m.GetStatus(), &generalResponse{Data: nil, Message: m.GetMessage()})
 		return
 	}
 	i.Save(&item)
-	helperJson.WriteJSON(w,http.StatusOK,&generalResponse{Data: nil , Message:  "successfully create"})
+	helperJson.WriteJSON(w, http.StatusOK, &generalResponse{Data: nil, Message: "successfully create"})
 }
 
-func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
-	var items []*memory.Item
+func (i *ItemHandler) HealthItems(w http.ResponseWriter, r *http.Request) {
+	var response generalResponse
 	const total = 10
 	var wg sync.WaitGroup
-	codes , err := i.seed(&wg, total)
+	codes, err := i.seed(&wg, total)
 	wg.Wait()
 	for _, code := range codes {
 		if code == http.StatusInternalServerError {
-			helperJson.WriteJSON(w,code,&generalResponse{Message: "unhealthy", Data: map[string]any{
-				"code": code,
-				"error" : err.Error(),
+			helperJson.WriteJSON(w, code, &generalResponse{Message: "unhealthy", Data: map[string]any{
+				"code":  code,
+				"error": err.Error(),
 			}})
 			return
 		}
 	}
 	request := httptest.NewRequest("GET", "http://localhost:8081/items", nil)
 	recorder := httptest.NewRecorder()
-	i.GetAll(recorder,request)
-	body , _ := io.ReadAll(recorder.Result().Body)
-	json.Unmarshal(body,&items)
-	helperJson.WriteJSON(w,recorder.Result().StatusCode,&generalResponse{Message: "test",Data: items})
+	i.GetAll(recorder, request)
+	body, _ := io.ReadAll(recorder.Result().Body)
+	json.Unmarshal(body, &response)
+	// _ , ok := response.Data.([]*memory.Item)
+	// if !ok {
+	// 	helperJson.WriteJSON(w, http.StatusInternalServerError, &generalResponse{Message: "unhealthy"})
+	// 	return
+	// }
+	helperJson.WriteJSON(w, recorder.Result().StatusCode, &generalResponse{Message: "test", Data: &response})
 }
 
-
-func (i *ItemHandler) seed(wg *sync.WaitGroup,total int) ([]int,error) {
+func (i *ItemHandler) seed(wg *sync.WaitGroup, total int) ([]int, error) {
 	var actualyCodesStatus []int
-	item := &memory.Item{Name: "Test",Qtt: 10,Price: &memory.Currency{Code: "US",Amount: 40.0,Name: "Dollar",Symbol: "$"}}
-	payload , err := json.MarshalIndent(item,"", "    ")
+	item := &memory.Item{Name: "Test", Qtt: 10, Price: &memory.Currency{Code: "US", Amount: 40.0, Name: "Dollar", Symbol: "$"}}
+	payload, err := json.MarshalIndent(item, "", "    ")
 	if err != nil {
-		return []int{http.StatusInternalServerError},err
+		return []int{http.StatusInternalServerError}, err
 	}
 	for n := 0; n < total; n++ {
 		wg.Add(1)
 		go func() {
 			request := httptest.NewRequest("POST", "http://localhost:8081", bytes.NewBuffer(payload))
 			recorder := httptest.NewRecorder()
-			i.CreateItems(recorder,request)
+			i.CreateItems(recorder, request)
 			actualyCodesStatus = append(actualyCodesStatus, recorder.Result().StatusCode)
 			defer wg.Done()
 		}()
 	}
-	return actualyCodesStatus,nil
+	return actualyCodesStatus, nil
 }
