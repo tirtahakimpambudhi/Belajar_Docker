@@ -203,3 +203,33 @@ CMD go run main.go
 
 ## User Instructions
 - Berfungsi untuk menggunakan user atau ganti user .
+- User Instruksi berguna ketika anda hanya menginjinkan folder tersebut di jalankan oleh user tertentu
+- Contoh Penggunaan
+```Dockerfile
+FROM golang:1.22-alpine
+
+RUN mkdir /app \
+    && addgroup -S tirtahakimgroup \
+    && adduser -S tirtahakim -G tirtahakimgroup \
+    && chown -R tirtahakim:tirtahakimgroup /app
+
+USER tirtahakim
+
+WORKDIR /app
+COPY . .
+
+# Change ownership to tirtahakim before modifying permissions
+USER root
+RUN chown -R tirtahakim:tirtahakimgroup /app
+
+# Switch back to tirtahakim to run subsequent commands
+USER tirtahakim
+
+# Adjust permissions
+RUN chmod -R 755 /app
+
+RUN go mod tidy
+
+CMD go test ./test -v
+
+```
