@@ -9,7 +9,7 @@ USER tirtahakim
 
 WORKDIR /app
 COPY . .
-RUN chmod -R 777 /app   # Giving full permissions for simplicity, adjust as necessary
+RUN chmod -R 755 /app   # Giving full permissions for simplicity, adjust as necessary
 RUN go mod tidy
 
 CMD go test ./test -v
