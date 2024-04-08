@@ -1,10 +1,13 @@
 FROM golang:1.22.0-alpine
-
-ENV APP_PORT="8081" APP_ENV="development" APP_LOG="/app/temp/log"
+ARG APP_FILENAME="main"
+ENV APP_PORT="8081" APP_NAME=${APP_FILENAME} APP_ENV="development" APP_LOG="/app/temp/log"
 
 WORKDIR /app
 COPY . .
+RUN mv main.go ${APP_FILENAME}.go
+RUN echo ${APP_NAME} "Ini Env"
+RUN echo ${APP_FILENAME} "Ini Arg"
 RUN go mod tidy
 
 VOLUME ${APP_LOG}
-CMD go run main.go
+CMD go run ${APP_NAME}.go
