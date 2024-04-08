@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine
+FROM golang:1.22.0-alpine
 
 ENV APP_PORT="8081" APP_ENV="development" APP_LOG="/app/temp/log"
 
