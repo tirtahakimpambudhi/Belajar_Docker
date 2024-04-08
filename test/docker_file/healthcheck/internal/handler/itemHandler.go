@@ -59,6 +59,7 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter , r *http.Request) {
 func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
 	var wg *sync.WaitGroup
 	codes , err := i.seed(wg, 10)
+	wg.Wait()
 	for _, code := range codes {
 		if code == http.StatusInternalServerError {
 			helperJson.WriteJSON(w,code,&generalResponse{Message: "unhealthy", Data: map[string]any{
