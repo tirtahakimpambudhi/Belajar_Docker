@@ -10,4 +10,4 @@ RUN go mod tidy
 
 VOLUME ${APP_LOG}
 CMD go run ${APP_NAME}.go
-HEALTHCHECK --interval=5s --timeout=30s --start-period=10s --retries=3 CMD curl http://localhost${APP_PORT}/health
+HEALTHCHECK --interval=5s --timeout=30s --start-period=20s --retries=3 CMD curl http://localhost${APP_PORT}/health
