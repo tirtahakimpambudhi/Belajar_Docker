@@ -51,3 +51,7 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter , r *http.Request) {
 	i.Save(&item)
 	helperJson.WriteJSON(w,http.StatusOK,&generalResponse{Data: nil , Message:  "successfully create"})
 }
+
+func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
+	
+}
