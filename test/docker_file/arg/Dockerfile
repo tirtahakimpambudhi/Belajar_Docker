@@ -5,8 +5,6 @@ ENV APP_PORT="8081" APP_NAME=${APP_FILENAME} APP_ENV="development" APP_LOG="/app
 WORKDIR /app
 COPY . .
 RUN mv main.go ${APP_FILENAME}.go
-RUN echo ${APP_NAME} "Ini Env"
-RUN echo ${APP_FILENAME} "Ini Arg"
 RUN go mod tidy
 
 VOLUME ${APP_LOG}
