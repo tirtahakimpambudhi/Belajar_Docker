@@ -1,2 +1,4 @@
 time="2024-04-08T06:22:30+07:00" level=info msg="GET : /items"
 time="2024-04-08T06:22:31+07:00" level=info msg="GET : /favicon.ico"
+time="2024-04-08T08:48:17+07:00" level=info msg="GET : /items"
+time="2024-04-08T08:48:22+07:00" level=info msg="GET : /health"
