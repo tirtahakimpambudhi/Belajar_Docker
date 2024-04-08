@@ -3,6 +3,7 @@ package handler
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"go_wd/internal/memory"
 	helperJson "go_wd/pkg/json"
 	"io"
@@ -58,7 +59,7 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter, r *http.Request) {
 }
 
 func (i *ItemHandler) HealthItems(w http.ResponseWriter, r *http.Request) {
-	var response generalResponse
+	var response *generalResponse
 	const total = 10
 	var wg sync.WaitGroup
 	codes, err := i.seed(&wg, total)
@@ -79,9 +80,11 @@ func (i *ItemHandler) HealthItems(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(body, &response)
 	// _ , ok := response.Data.([]*memory.Item)
 	// if !ok {
-	// 	helperJson.WriteJSON(w, http.StatusInternalServerError, &generalResponse{Message: "unhealthy"})
+	// 	helperJson.WriteJSON(`w, http.StatusInternalServerError, &generalResponse{Message: "unhealthy"})
 	// 	return
 	// }
+	_, ok := response.Data.([]*memory.Item)
+	fmt.Println(ok)
 	helperJson.WriteJSON(w, recorder.Result().StatusCode, &generalResponse{Message: "test", Data: &response})
 }
 
