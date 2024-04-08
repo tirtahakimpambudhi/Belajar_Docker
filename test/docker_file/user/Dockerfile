@@ -1,4 +1,4 @@
-FROM golang:1.18-alpine
+FROM golang:1.22-alpine
 
 RUN mkdir /app \
     && addgroup -S tirtahakimgroup \
@@ -13,7 +13,6 @@ COPY . .
 # Change ownership to tirtahakim before modifying permissions
 USER root
 RUN chown -R tirtahakim:tirtahakimgroup /app
-RUN go mod init go_user
 
 # Switch back to tirtahakim to run subsequent commands
 USER tirtahakim
