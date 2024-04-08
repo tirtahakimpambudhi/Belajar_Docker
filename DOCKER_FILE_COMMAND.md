@@ -236,3 +236,7 @@ CMD go test ./test -v
 
 ```
 
+## Arg Instructiions
+- Berfungsi mendefinisikan variabel yang digunnakan oleh pengguna dan bisa di kirim saat build time menggunakann ``` --build-arg key-value```
+- Arg instruksi hanya berfungsi ketika build time, Jadi ketika container berjalan Arg instruksi tidak gunakan lagi alias sudah hilang . Kebalikan dari Env instruksi
+- Cara penggunaan persis dengan Env instruksi
