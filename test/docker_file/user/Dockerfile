@@ -13,6 +13,7 @@ COPY . .
 # Change ownership to tirtahakim before modifying permissions
 USER root
 RUN chown -R tirtahakim:tirtahakimgroup /app
+RUN go mod init go_user
 
 # Switch back to tirtahakim to run subsequent commands
 USER tirtahakim
