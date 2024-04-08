@@ -17,6 +17,7 @@ func main() {
 	}
 	mux := http.NewServeMux()
 	handl := handler.NewItemHandler()
+	mux.HandleFunc("GET /health",handl.HealthItems)
 	mux.HandleFunc("GET /item/{id}",handl.GetItemByID)
 	mux.HandleFunc("GET /items",handl.GetAll)
 	mux.HandleFunc("POST /item",handl.CreateItems)

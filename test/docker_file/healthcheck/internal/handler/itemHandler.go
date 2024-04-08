@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"go_wd/internal/memory"
 	helperJson "go_wd/pkg/json"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"sync"
@@ -57,8 +58,10 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter , r *http.Request) {
 }
 
 func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
+	var items []*memory.Item
+	const total = 10
 	var wg *sync.WaitGroup
-	codes , err := i.seed(wg, 10)
+	codes , err := i.seed(wg, total)
 	wg.Wait()
 	for _, code := range codes {
 		if code == http.StatusInternalServerError {
@@ -69,6 +72,12 @@ func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
 			return
 		}
 	}
+	request := httptest.NewRequest("GET", "http://localhost:8081/items", nil)
+	recorder := httptest.NewRecorder()
+	i.GetAll(recorder,request)
+	body , _ := io.ReadAll(recorder.Result().Body)
+	json.Unmarshal(body,&items)
+	helperJson.WriteJSON(w,recorder.Result().StatusCode,&generalResponse{Message: "test",Data: items})
 }
 
 
