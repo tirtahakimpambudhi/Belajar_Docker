@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine
+FROM golang:1.18-alpine
 
 RUN mkdir /app \
     && addgroup -S tirtahakimgroup \
@@ -9,7 +9,17 @@ USER tirtahakim
 
 WORKDIR /app
 COPY . .
-RUN chmod -R 755 /app   # Giving full permissions for simplicity, adjust as necessary
+
+# Change ownership to tirtahakim before modifying permissions
+USER root
+RUN chown -R tirtahakim:tirtahakimgroup /app
+
+# Switch back to tirtahakim to run subsequent commands
+USER tirtahakim
+
+# Adjust permissions
+RUN chmod -R 755 /app
+
 RUN go mod tidy
 
 CMD go test ./test -v
