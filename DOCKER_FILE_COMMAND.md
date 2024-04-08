@@ -259,4 +259,12 @@ CMD go run ${APP_NAME}.go
 - Berfungsi memberitahukan bahwa container sedang baik baik saja atau tidak 
 - ```HEALTHCHECK [OPTIONS] CMD ```
 - OPTIONS
-  - --interval=DURATION (30s) untuk 
+  - --interval=DURATION (30s) untuk jeda waktu setiap health check nya di jalankan
+  - --timeout=DURATION (30s) batas waktu pengecek an health check
+  - --start-period=DURATION (0s) jeda setelah jalan nya aplikasi  dan container kita 
+  - --retries=N (3) pengulangan health check ketika error berapa kali dijalankan untuk memastikan benar benar error
+- Contoh Penggunaan
+```Dockerfile
+
+
+```
