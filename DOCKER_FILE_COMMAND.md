@@ -240,3 +240,17 @@ CMD go test ./test -v
 - Berfungsi mendefinisikan variabel yang digunnakan oleh pengguna dan bisa di kirim saat build time menggunakann ``` --build-arg key-value```
 - Arg instruksi hanya berfungsi ketika build time, Jadi ketika container berjalan Arg instruksi tidak gunakan lagi alias sudah hilang . Kebalikan dari Env instruksi
 - Cara penggunaan persis dengan Env instruksi
+```Dockerfile
+FROM golang:1.22.0-alpine
+ARG APP_FILENAME="main"
+ENV APP_PORT="8081" APP_NAME=${APP_FILENAME} APP_ENV="development" APP_LOG="/app/temp/log"
+
+WORKDIR /app
+COPY . .
+RUN mv main.go ${APP_FILENAME}.go
+RUN echo ${APP_NAME}
+RUN go mod tidy
+
+VOLUME ${APP_LOG}
+CMD go run ${APP_NAME}.go
+```
