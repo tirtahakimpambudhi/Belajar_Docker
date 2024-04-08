@@ -126,7 +126,7 @@ CMD go run app/main.go
 
 ## Env Instructions
 - Berfungsi menambahkan enviroment variabel di image tersebut. Dan enviroment variabel tersebut bisa dirubah ketika saat pembuatan container memakai flag ```-e atau --env```
-
+- Berfungsi ketika container sedang berjalan atau running.
 ```Dockerfile
 FROM golang:1.18-alpine
 # Single env
@@ -235,3 +235,4 @@ RUN go mod tidy
 CMD go test ./test -v
 
 ```
+
