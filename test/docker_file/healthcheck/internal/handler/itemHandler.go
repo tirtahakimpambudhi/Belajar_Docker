@@ -61,17 +61,22 @@ func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
 }
 
 
-func (i *ItemHandler) seed(wg *sync.WaitGroup,total int) {
+func (i *ItemHandler) seed(wg *sync.WaitGroup,total int) []int {
+	var actualyCodesStatus []int
 	item := &memory.Item{Name: "Test",Qtt: 10,Price: &memory.Currency{Code: "US",Amount: 40.0,Name: "Dollar",Symbol: "$"}}
-	payload , _ := json.MarshalIndent(item,"", "    ")
-
+	payload , err := json.MarshalIndent(item,"", "    ")
+	if err != nil {
+		return []int{http.StatusInternalServerError}
+	}
 	for n := 0; n < total; n++ {
 		wg.Add(1)
 		go func() {
 			request := httptest.NewRequest("POST", "http://localhost:8081", bytes.NewBuffer(payload))
 			recorder := httptest.NewRecorder()
 			i.CreateItems(recorder,request)
+			actualyCodesStatus = append(actualyCodesStatus, recorder.Result().StatusCode)
 			defer wg.Done()
 		}()
 	}
+	return actualyCodesStatus
 }
