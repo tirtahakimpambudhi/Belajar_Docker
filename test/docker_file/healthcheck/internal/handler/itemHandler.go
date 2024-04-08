@@ -3,10 +3,8 @@ package handler
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"go_wd/internal/memory"
 	helperJson "go_wd/pkg/json"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"sync"
@@ -59,7 +57,6 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter, r *http.Request) {
 }
 
 func (i *ItemHandler) HealthItems(w http.ResponseWriter, r *http.Request) {
-	var response *generalResponse
 	const total = 10
 	var wg sync.WaitGroup
 	codes, err := i.seed(&wg, total)
@@ -76,16 +73,11 @@ func (i *ItemHandler) HealthItems(w http.ResponseWriter, r *http.Request) {
 	request := httptest.NewRequest("GET", "http://localhost:8081/items", nil)
 	recorder := httptest.NewRecorder()
 	i.GetAll(recorder, request)
-	body, _ := io.ReadAll(recorder.Result().Body)
-	json.Unmarshal(body, &response)
-	// _ , ok := response.Data.([]*memory.Item)
-	// if !ok {
-	// 	helperJson.WriteJSON(`w, http.StatusInternalServerError, &generalResponse{Message: "unhealthy"})
-	// 	return
-	// }
-	_, ok := response.Data.([]*memory.Item)
-	fmt.Println(ok)
-	helperJson.WriteJSON(w, recorder.Result().StatusCode, &generalResponse{Message: "test", Data: &response})
+	if recorder.Result().StatusCode != http.StatusOK {
+		helperJson.WriteJSON(w, http.StatusInternalServerError, &generalResponse{Message: "unhealthy", Data: nil})
+		return
+	}
+	helperJson.WriteJSON(w, recorder.Result().StatusCode, &generalResponse{Message: "healthy", Data: nil})
 }
 
 func (i *ItemHandler) seed(wg *sync.WaitGroup, total int) ([]int, error) {
