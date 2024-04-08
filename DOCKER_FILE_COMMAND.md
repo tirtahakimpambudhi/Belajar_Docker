@@ -200,3 +200,6 @@ CMD go run main.go
 ```
 - Jika kita perintah ```WORKDIR app/test``` maka kedua folder tersebut meski tidak ada tetap autocreate sehingga workdir nya app/test
 - Jika kita perintah lagi ``` WORKDIR /etc``` maka workdir nya berubah /etc
+
+## User Instructions
+- Berfungsi untuk menggunakan user atau ganti user .
