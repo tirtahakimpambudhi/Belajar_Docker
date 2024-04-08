@@ -218,11 +218,11 @@ USER tirtahakim
 WORKDIR /app
 COPY . .
 
-# Change ownership to tirtahakim before modifying permissions
+# beralih ke pengguna root untuk sementara agar perintah chown dapat dijalankan dengan benar.
 USER root
 RUN chown -R tirtahakim:tirtahakimgroup /app
 
-# Switch back to tirtahakim to run subsequent commands
+# beralih ke pengguna tirtahakim 
 USER tirtahakim
 
 # Adjust permissions
