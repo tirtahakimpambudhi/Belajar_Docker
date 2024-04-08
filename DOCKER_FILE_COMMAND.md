@@ -224,8 +224,10 @@ RUN chown -R tirtahakim:tirtahakimgroup /app
 
 # beralih ke pengguna tirtahakim 
 USER tirtahakim
-
-# Adjust permissions
+# Akses 755
+#Membaca, menulis, dan mengeksekusi kepada pemilik (owner) file/direktori.
+#Membaca dan mengeksekusi kepada grup pemilik (group) file/direktori.
+#Membaca dan mengeksekusi kepada pengguna lain (others) di luar pemilik dan grup.
 RUN chmod -R 755 /app
 
 RUN go mod tidy
