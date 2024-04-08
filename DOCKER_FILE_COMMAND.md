@@ -254,3 +254,9 @@ RUN go mod tidy
 VOLUME ${APP_LOG}
 CMD go run ${APP_NAME}.go
 ```
+
+## Health Check Instructions
+- Berfungsi memberitahukan bahwa container sedang baik baik saja atau tidak 
+- ```HEALTHCHECK [OPTIONS] CMD ```
+- OPTIONS
+  - --interval=DURATION (30s) untuk 
