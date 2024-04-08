@@ -6,6 +6,8 @@ RUN adduser -S -D -h tirtahakim tirtahakimgroup
 RUN chown -R tirtahakim:tirtahakimgroup /app
 USER tirtahakim
 
-COPY . /app
+WORKDIR /app
+COPY . .
+RUN go mod tidy
 
-CMD go 
+CMD go test ./test -v
