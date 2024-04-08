@@ -23,9 +23,7 @@ func PrintRecorderJSON(res *httptest.ResponseRecorder) {
 	fmt.Println(string(body))
 }
 
-func ItemSeed(total int) {
 
-}
 
 func TestGetAll(t *testing.T) {
 	var wg sync.WaitGroup

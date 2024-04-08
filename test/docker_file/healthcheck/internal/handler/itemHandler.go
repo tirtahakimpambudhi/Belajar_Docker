@@ -1,9 +1,13 @@
 package handler
 
 import (
+	"bytes"
+	"encoding/json"
 	"go_wd/internal/memory"
 	helperJson "go_wd/pkg/json"
 	"net/http"
+	"net/http/httptest"
+	"sync"
 
 	"github.com/google/uuid"
 )
@@ -54,4 +58,20 @@ func (i *ItemHandler) CreateItems(w http.ResponseWriter , r *http.Request) {
 
 func (i *ItemHandler) HealthItems(w http.ResponseWriter,r *http.Request)  {
 	
+}
+
+
+func (i *ItemHandler) seed(wg *sync.WaitGroup,total int) {
+	item := &memory.Item{Name: "Test",Qtt: 10,Price: &memory.Currency{Code: "US",Amount: 40.0,Name: "Dollar",Symbol: "$"}}
+	payload , _ := json.MarshalIndent(item,"", "    ")
+
+	for n := 0; n < total; n++ {
+		wg.Add(1)
+		go func() {
+			request := httptest.NewRequest("POST", "http://localhost:8081", bytes.NewBuffer(payload))
+			recorder := httptest.NewRecorder()
+			i.CreateItems(recorder,request)
+			defer wg.Done()
+		}()
+	}
 }
