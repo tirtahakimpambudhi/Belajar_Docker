@@ -15,7 +15,7 @@ FROM alpine:latest
 FROM build
 ENV APP_FILENAME=${APP_NAME}
 WORKDIR /bin
-COPY --from=build ./bin/${APP_FILENAME} .
+COPY --from=build /app/bin/${APP_FILENAME} .
 
 CMD ./${APP_FILENAME}
 
