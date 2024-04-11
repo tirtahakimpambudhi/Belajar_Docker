@@ -12,7 +12,7 @@ VOLUME ${APP_LOG}
 RUN go build -o ./bin/${APP_FILENAME} ./${APP_FILENAME}.go
 
 FROM alpine:latest
-
+ENV APP_FILENAME=
 WORKDIR /bin
 COPY --from=build ./bin/${APP_FILENAME} .
 
