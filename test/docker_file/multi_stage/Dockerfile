@@ -9,12 +9,14 @@ RUN mv main.go ${APP_FILENAME}.go
 RUN go mod tidy
 
 VOLUME ${APP_LOG}
-CMD go build -o ./bin/${APP_FILENAME} ./${APP_FILENAME}.go
+RUN go build -o ./bin/${APP_FILENAME} ./${APP_FILENAME}.go
 
 FROM alpine:latest
 
 WORKDIR /bin
-COPY --from=build ./bin/${APP_FILENAME} /bin/
+COPY --from=build ./bin/${APP_FILENAME} .
+
+CMD ./${APP_FILENAME}
 
 
 
