@@ -13,7 +13,7 @@ RUN go build -o ./bin/${APP_FILENAME} ./${APP_FILENAME}.go
 
 FROM alpine:latest
 FROM build
-ENV APP_FILENAME=
+ENV APP_FILENAME=${APP_NAME}
 WORKDIR /bin
 COPY --from=build ./bin/${APP_FILENAME} .
 
