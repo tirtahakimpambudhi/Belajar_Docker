@@ -4,3 +4,6 @@ services:
   nginx_example:
     container_name: nginx_example
     image: nginx:latest
+  nginx_example_2:
+    container_name: nginx_example_2
+    image: nginx:latest
