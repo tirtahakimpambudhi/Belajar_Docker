@@ -16,7 +16,11 @@ docker compose start
 - Jawab Nya Tidak , karena setiap perintah docker compose hanya relative dengan satu file docker compose yang berada di workdir kita.
   
 ## Cara Melihat Container yang ada di Docker Compose
-- Cara Pertama 
+- Hanya Container yang di jalankan saja
 ```bash
-docker compose ls -a
+docker compose ps 
+```
+- Semua Container
+```bash
+docker compose ps -a
 ```
