@@ -279,3 +279,33 @@ VOLUME ${APP_LOG}
 CMD go run ${APP_NAME}.go
 HEALTHCHECK --interval=10s --timeout=60s --start-period=10s --retries=3 CMD curl http://localhost:${APP_PORT}/health
 ```
+## Multi Stage
+- Berfungsi ketika membutuh kan lebih dari 1 stage dan beda image 
+- Jadi Misal anda ingin menggunakan image alpine tetapi anda memiliki aplikasi golang maka anda butuh multi stage
+- Bagaimana implementasi ? Mudah 
+  aplikasi anda yang ingin di jalankan di alpine atau image lain dibuat binary file terlebih dahulu yang stage nya memiliki image sesuai aplikasi anda setelah itu dipindahkan di di stage yang image nya alpine
+- Contoh Penggunaan
+```Dockerfile
+FROM golang:1.22.0-alpine as build
+ARG APP_FILENAME="main"
+ENV APP_PORT="8081" APP_NAME=${APP_FILENAME} APP_ENV="development" APP_LOG="/app/temp/log"
+
+
+WORKDIR /app
+COPY . .
+RUN mv main.go ${APP_FILENAME}.go
+RUN go mod tidy
+
+VOLUME ${APP_LOG}
+RUN go build -o ./bin/${APP_FILENAME} ./${APP_FILENAME}.go
+
+FROM alpine:latest
+FROM build
+ENV APP_FILENAME=${APP_NAME}
+RUN apk --no-cache add curl
+WORKDIR /bin
+COPY --from=build /app/bin/${APP_FILENAME} .
+
+CMD ./${APP_FILENAME}
+HEALTHCHECK --interval=10s --timeout=60s --start-period=10s --retries=3 CMD curl http://localhost:${APP_PORT}/health
+```
