@@ -8,13 +8,23 @@ Jadi Inti nya Docker compose adalah tools atau alat untuk mengonfigurasi serta m
 ```bash
 docker compose create
 ```
+## Cara Menghapus Docker Compose 
+```bash
+docker compose down
+```
+- Ketika Menghapus Docker Compose maka semua container dan network yang berhubungan akan ikut terhapus juga 
 ## Cara Menjalankan Container yang Ada di Docker Compose
 ```bash
 docker compose start
 ```
 - Nah Pertanyaan nya kalau kita sebelum nya memiliki project yang banya dan sama sama pakai docker compose jadi akan semua akan di jalan kan ?
 - Jawab Nya Tidak , karena setiap perintah docker compose hanya relative dengan satu file docker compose yang berada di workdir kita.
-  
+
+## Cara Memberhentikan Container yang Ada di Docker Compose
+```bash
+docker compose stop
+```
+
 ## Cara Melihat Container yang ada di Docker Compose
 - Hanya Container yang di jalankan saja
 ```bash
