@@ -12,3 +12,4 @@ This repository contains a collection of useful Docker commands and guides to he
 6. [Docker Command Inspect & Prune](DOCKER_INSPECT_PRUNE_COMMAND.md)
 7. [Docker Command and Insturctions Dockerfile](DOCKER_FILE_COMMAND.md)
 8. [Docker Compose Command](DOCKER_COMPOSE_COMMAND.md)
+9. [Docker Compose Documentation](DOCKER_COMPOSE_DOC.md)
