@@ -12,7 +12,7 @@ docker compose create
 ```bash
 docker compose down
 ```
-- Ketika Menghapus Docker Compose maka semua container dan network yang berhubungan akan ikut terhapus juga 
+- Ketika Menghapus Docker Compose maka semua container dan network yang berhubungan dengan docker compose akan ikut terhapus juga 
 ## Cara Menjalankan Container yang Ada di Docker Compose
 ```bash
 docker compose start

@@ -10,4 +10,4 @@ backup/
 *.php
 *.py
 upload/
-# Help Me
+.vscode/
