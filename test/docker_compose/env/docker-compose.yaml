@@ -7,6 +7,6 @@ services:
     ports:
       - "8081:27017/tcp"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
       MONGO_INITDB_DATABASE: admin
