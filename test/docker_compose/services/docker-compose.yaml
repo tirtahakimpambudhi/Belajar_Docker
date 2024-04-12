@@ -1,6 +1,7 @@
 version: "3.8"
 
-services:
+services: # untuk menampung container lebih dari 1
   nginx_example:
     container_name: "nginx_example"
     image: nginx:latest
+  
