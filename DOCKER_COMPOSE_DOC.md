@@ -26,5 +26,37 @@ services:
 - Terbagi 2 cara long syntax dan short syntax 
 - Long Syntax 
 ```yaml
+services:
+    nginx_example_service:
+    container_name: "nginx_example_service"
+    image: nginx:latest
+    ports:
+      - target: 80
+        published: 8081
+        protocol: tcp
+```
+- Short Syntax
+```yaml
+services:
+    nginx_example_service: 
+    container_name: "nginx_example_service"
+    image: nginx:latest
+    ports:
+    #host_port:container_port/protocol
+      - "8081:80/tcp"
+```
 
+## Env
+- Contoh Penggunaan 
+```yaml
+services:
+  mongodb_example_env:
+    container_name: "mongodb_example_env"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: username
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: database
 ```
