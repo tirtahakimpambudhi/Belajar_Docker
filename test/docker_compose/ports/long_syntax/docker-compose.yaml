@@ -7,4 +7,4 @@ services: # untuk menampung container lebih dari 1
     ports:
       - target: 80
         published: 8081
-        
+        protocol: tcp
