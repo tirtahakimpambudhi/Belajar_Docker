@@ -23,4 +23,8 @@ services:
 ```
 
 ## Ports
-- 
+- Terbagi 2 cara long syntax dan short syntax 
+- Long Syntax 
+```yaml
+
+```
