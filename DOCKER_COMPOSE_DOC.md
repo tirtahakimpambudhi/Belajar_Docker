@@ -58,5 +58,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: username
       MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: database
+      MONGO_INITDB_DATABASE: admin
 ```
+
