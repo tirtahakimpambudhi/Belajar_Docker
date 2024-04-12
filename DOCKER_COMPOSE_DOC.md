@@ -61,3 +61,93 @@ services:
       MONGO_INITDB_DATABASE: admin
 ```
 
+## Mount
+- source adalah path dari host atau nama volume
+- target adalah path dari container
+- mode ada 2 (readonly dan readwrite) default readwrite
+### Bind
+#### Short Syntax
+```yaml
+version: "3.9"
+
+services:
+  mongodb_example_bind:
+    container_name: "mongodb_example_bind"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+    #source:target/mode
+      - ../../../../../db/mongodb:/data/db:rw
+```
+#### Long Syntax
+```yaml
+version: "3.9"
+
+services:
+  mongodb_example_bind:
+    container_name: "mongodb_example_bind"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - type: bind
+        source: "../../../../../db/mongodb"
+        target: "/data/db"
+        read_only: false
+```
+
+### Volume
+
+#### Short Syntax
+```yaml
+version: "3.9"
+
+services:
+  mongodb_example_bind:
+    container_name: "mongodb_example_bind"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+    #source:target/mode
+      - mongo_data:/data/db:rw
+volumes:
+  mongo_data:
+    name: "mongo_data"
+```
+#### Long Syntax
+```yaml
+version: "3.9"
+
+services:
+  mongodb_example_bind:
+    container_name: "mongodb_example_bind"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - type: volume
+        source: mongo_data
+        target: "/data/db"
+        read_only: false
+volumes:
+  mongo_data:
+    name: "mongo_data"
+```
