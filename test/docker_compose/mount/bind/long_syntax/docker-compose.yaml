@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  mongodb_example_bind:
+    container_name: "mongodb_example_bind"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - ../../../../../db/mongodb:/data/db:rw
