@@ -1,0 +1,10 @@
+version: "3.8"
+
+services: # untuk menampung container lebih dari 1
+  nginx_example_service: # sebaiknya nama container
+    container_name: "nginx_example"
+    image: nginx:latest
+    ports:
+      - target: 80
+        published: 8081
+        
