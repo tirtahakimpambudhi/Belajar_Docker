@@ -23,7 +23,7 @@ services:
 ## Ports
 - Target adalah port dari container
 - Publish adalah port yang ingin di publish di host
-- protocol 
+- protocol terbagi 2 (tcp dan udp) default tcp
 - Terbagi 2 cara long syntax dan short syntax 
 - Long Syntax 
 ```yaml
