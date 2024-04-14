@@ -6,8 +6,6 @@ services:
     image: mongo:latest
     networks:
       - network_example
-    ports:
-      - "27018:27017/tcp"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 12345
