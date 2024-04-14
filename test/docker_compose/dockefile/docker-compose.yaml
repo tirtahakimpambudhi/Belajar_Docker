@@ -50,6 +50,10 @@ services:
     build:
       context: ./RESTful_API_WITH_GIN
       dockerfile: Dockerfile
+    image: app:test
+    ports:
+      - "3500:3500/tcp"
+    
     
 
 
