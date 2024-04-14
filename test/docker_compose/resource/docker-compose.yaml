@@ -5,3 +5,16 @@ services:
     container_name: "postgres_db"
     image: postgres:13-alpine
     restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    
+
+
+volumes:
+  PG_DATA:
+    name: PG_DATA
