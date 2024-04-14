@@ -13,7 +13,7 @@ services:
     volumes:
       - PG_DATA:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - '5430:5432'
     deploy:
       resources:
         reservations:
