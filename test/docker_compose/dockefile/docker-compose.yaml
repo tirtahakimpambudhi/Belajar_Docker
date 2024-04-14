@@ -45,6 +45,11 @@ services:
         limits:
           cpus: "0.5"
           memory: "170mb"
+  app:
+    container_name: "app"
+    build:
+      context: ./RESTful_API_WITH_GIN
+      dockerfile: Dockerfile
     
 
 
