@@ -5,9 +5,8 @@ services:
     container_name: "postgres_db"
     image: postgres:13-alpine
     restart: always
-    command: psql -U postgres -c 'CREATE DATABASE IF NOT EXISTS test;'
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data
