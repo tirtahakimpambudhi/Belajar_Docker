@@ -10,7 +10,7 @@ services:
       - "27018:27017/tcp"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_ROOT_PASSWORD: 12345
       MONGO_INITDB_DATABASE: admin
   mongo_express_example:
     container_name: "mongo_express_example"
@@ -23,8 +23,8 @@ services:
       - mongodb_example
     environment:
        ME_CONFIG_MONGODB_ADMINUSERNAME: root 
-       ME_CONFIG_MONGODB_ADMINPASSWORD: t1rt@h4k1m 
-       ME_CONFIG_MONGODB_URL: mongodb://root:t1rt@h4k1m@network_example:27017/ 
+       ME_CONFIG_MONGODB_ADMINPASSWORD: 12345 
+       ME_CONFIG_MONGODB_URL: mongodb://root:12345@network_example:27017/ 
        ME_CONFIG_BASICAUTH_USERNAME: admin 
        ME_CONFIG_BASICAUTH_PASSWORD: admin 
 
