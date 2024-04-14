@@ -12,4 +12,6 @@ services:
       MONGO_INITDB_DATABASE: admin
   mongo_express_example:
     container_name: "mongo_express_example"
-    image: mong
+    image: mongo-express:latest
+    depends_on:
+      - mongodb_example
