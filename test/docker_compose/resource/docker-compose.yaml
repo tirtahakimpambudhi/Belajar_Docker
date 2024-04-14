@@ -5,7 +5,7 @@ services:
     container_name: "postgres_db"
     image: postgres:13-alpine
     restart: always
-    command: ["psql -U postgres -c 'CREATE DATABASE test;'"]
+    command: ["bash", "-c", "docker-entrypoint.sh postgres & sleep 5 && psql -U postgres -c 'CREATE DATABASE test;'"]
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
