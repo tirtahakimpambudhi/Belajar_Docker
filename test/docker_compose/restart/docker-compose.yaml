@@ -20,6 +20,7 @@ services:
   mongo_express_example:
     container_name: "mongo_express_example"
     image: mongo-express:latest
+    restart: always
     networks:
       - network_example
     ports:
