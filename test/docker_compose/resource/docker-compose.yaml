@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - PG_DATA:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     ports:
       - '5430:5432'
     deploy:
@@ -22,9 +22,23 @@ services:
         limits:
           cpus: "0.5"
           memory: "128mb"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tirtahakim19@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: t1rt@h4k1m
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     
 
 
 volumes:
-  PG_DATA:
-    name: PG_DATA
+  postgres-data:
+    name: postgres-data
+  pgadmin-data:
+    name: pgadmin-data
+
