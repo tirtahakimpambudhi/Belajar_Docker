@@ -33,9 +33,8 @@ services:
     ports:
       - "8888:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_DEFAULT_EMAIL: tirtahakim19@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: t1rt@h4k1m
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     
