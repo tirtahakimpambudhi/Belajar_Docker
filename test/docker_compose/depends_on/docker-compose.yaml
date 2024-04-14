@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  mongodb_example:
+    container_name: "mongodb_example"
+    image: mongo:latest
+    ports:
+      - "8081:27017/tcp"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
+      MONGO_INITDB_DATABASE: admin
+  mongo_express_example:
+    container_name: "mongo_express_example"
+    image: mong
