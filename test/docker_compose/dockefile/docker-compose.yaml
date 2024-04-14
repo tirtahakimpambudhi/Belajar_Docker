@@ -37,6 +37,14 @@ services:
       PGADMIN_DEFAULT_PASSWORD: t1rt@h4k1m
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.25"
+          memory: "150mb"
+        limits:
+          cpus: "0.5"
+          memory: "170mb"
     
 
 
