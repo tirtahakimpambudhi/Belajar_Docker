@@ -1,5 +1,12 @@
 version: "3.9"
 
+services:
+  alpine_examples:
+    container_name: "alpine_examples"
+    image: alpine:latest
+    networks:
+      - network_examples
+
 networks:
   network_examples:
     name: network_examples
