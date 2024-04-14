@@ -50,6 +50,9 @@ services:
     build:
       context: ./RESTful_API_WITH_GIN
       dockerfile: Dockerfile
+    depends_on:
+      - postgres_db
+    restart: on-failure
     image: app:test
     ports:
       - "3500:3500/tcp"
