@@ -1,0 +1,6 @@
+version: "3.9"
+
+networks:
+  network_example:
+    name: network_example
+    driver: bridge
