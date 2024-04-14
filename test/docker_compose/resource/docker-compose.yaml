@@ -14,6 +14,14 @@ services:
       - PG_DATA:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.25"
+          memory: "100mb"
+        limits:
+          cpus: "0.5"
+          memory: "128mb"
     
 
 
