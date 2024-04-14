@@ -4,8 +4,10 @@ services:
   mongodb_example:
     container_name: "mongodb_example"
     image: mongo:latest
+    networks:
+      - network_example
     ports:
-      - "8081:27017/tcp"
+      - "27018:27017/tcp"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: t1rt@h4k1m
@@ -13,5 +15,20 @@ services:
   mongo_express_example:
     container_name: "mongo_express_example"
     image: mongo-express:latest
+    networks:
+      - network_example
+    ports:
+      - "8081:8081/tcp"
     depends_on:
       - mongodb_example
+    environment:
+       ME_CONFIG_MONGODB_ADMINUSERNAME: root 
+       ME_CONFIG_MONGODB_ADMINPASSWORD: t1rt@h4k1m 
+       ME_CONFIG_MONGODB_URL: mongodb://root:t1rt@h4k1m@network_example:27017/ 
+       ME_CONFIG_BASICAUTH_USERNAME: admin 
+       ME_CONFIG_BASICAUTH_PASSWORD: admin 
+
+networks:
+  network_example:
+    name: network_example
+    driver: bridge
