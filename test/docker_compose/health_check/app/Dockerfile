@@ -19,4 +19,4 @@ WORKDIR /bin
 COPY --from=build /app/bin/${APP_FILENAME} .
 
 CMD ./${APP_FILENAME}
-HEALTHCHECK --interval=10s --timeout=60s --start-period=10s --retries=3 CMD curl http://localhost:${APP_PORT}/health
+

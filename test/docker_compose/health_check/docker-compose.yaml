@@ -4,8 +4,9 @@ services:
   app:
     container_name: "app"
     image: "golang-app:dev"
+    restart: on-failure
     build:
-      context: .
+      context: ./app
       dockerfile: Dockerfile
       args:
         - APP_FILENAME="server"
@@ -15,7 +16,14 @@ services:
       - APP_LOG="/app/temp/log"
     volumes:
       - app-log:/app/temp/log:rw
-
+    ports:
+      - "8081:8080/tcp"
+    healthcheck:
+      interval: 10s
+      timeout: 60s
+      start_period: 10s
+      retries: 3
+      test: ["CMD","curl","http://localhost:8080/health"]
 
 volumes:
   app-log:
