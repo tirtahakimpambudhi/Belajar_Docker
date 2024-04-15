@@ -23,7 +23,7 @@ services:
       timeout: 60s
       start_period: 10s
       retries: 3
-      test: ["CMD","curl","http://localhost:8080/health"]
+      test: ["CMD","curl" , "-f" ,"http://localhost:8080/health"]
 
 volumes:
   app-log:
