@@ -13,6 +13,7 @@ services:
       - APP_ENV="development"
       - APP_PORT="8080"
       - APP_LOG="/app/temp/log"
+      - APP_FILENAME=server
     volumes:
       - app-log:/app/temp/log:rw
     ports:
