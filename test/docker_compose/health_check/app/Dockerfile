@@ -17,6 +17,7 @@ ENV APP_FILENAME=${APP_NAME}
 RUN apk --no-cache add curl
 WORKDIR /bin
 COPY --from=build /app/bin/${APP_FILENAME} .
+RUN echo ${APP_FILENAME}
 
 CMD ./${APP_FILENAME}
 
