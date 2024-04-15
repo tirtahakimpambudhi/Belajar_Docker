@@ -4,7 +4,7 @@ services:
   app:
     container_name: "app"
     image: "golang-app:dev"
-    restart: on-failure
+    restart: always
     build:
       context: ./app
       dockerfile: Dockerfile
