@@ -1,6 +1,6 @@
 # Welcome to My Docker Command Repository!
 
-This repository contains a collection of useful Docker commands and guides to help you with Docker-related tasks.
+This repository contains a collection of useful Docker commands and guides to help you with Docker-related and K8s tasks.
 
 ## Contents
 
@@ -13,3 +13,8 @@ This repository contains a collection of useful Docker commands and guides to he
 7. [Docker Command and Insturctions Dockerfile](DOCKER_FILE_COMMAND.md)
 8. [Docker Compose Command](DOCKER_COMPOSE_COMMAND.md)
 9. [Docker Compose Documentation](DOCKER_COMPOSE_DOC.md)
+10. [K8S Concepts Documentation](K8S_ARCH_CLUSTER.md)
+
+## Source Reference 
+1. [K8s Templates](https://github.com/khannedy/belajar-kubernetes.git)
+
