@@ -1,0 +1,822 @@
+basePath: /api/
+definitions:
+  handler.ResponseErrors:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  model.Date:
+    properties:
+      day:
+        maximum: 31
+        minimum: 1
+        type: integer
+      month:
+        maximum: 12
+        minimum: 1
+        type: integer
+      year:
+        maximum: 2100
+        minimum: 1900
+        type: integer
+    required:
+    - day
+    - month
+    - year
+    type: object
+  model.TodoListRequest:
+    properties:
+      completed:
+        type: boolean
+      description:
+        type: string
+      due_date:
+        $ref: '#/definitions/model.Date'
+      priority:
+        minimum: 1
+        type: integer
+      task_name:
+        type: string
+    required:
+    - description
+    - due_date
+    - task_name
+    type: object
+  model.UserLoginUpdateRequest:
+    properties:
+      email:
+        maxLength: 100
+        type: string
+      password:
+        minLength: 8
+        type: string
+      username:
+        maxLength: 100
+        minLength: 5
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  model.UserRequest:
+    properties:
+      email:
+        maxLength: 100
+        type: string
+      id:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      role:
+        $ref: '#/definitions/model.UserRole'
+      username:
+        maxLength: 100
+        minLength: 5
+        type: string
+    required:
+    - email
+    - id
+    - password
+    - role
+    - username
+    type: object
+  model.UserRole:
+    enum:
+    - ADMIN
+    - MODERATOR
+    - BASIC
+    type: string
+    x-enum-varnames:
+    - Admin
+    - Moderator
+    - Basic
+  web.StandartResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:3500
+info:
+  contact:
+    email: tirtanewwhakim22@gmail.com
+    name: Tirta Hakim Pambudhi
+    url: https://github.com/tirtahakimpambudhi
+  description: Managament Todolist with Users auth
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://tos.santoshk.dev
+  title: Users & Todolist Service
+  version: 1.0.1
+paths:
+  /admin/registers:
+    post:
+      description: Create new many users
+      parameters:
+      - description: Registers Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.UserRequest'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Register for all roles
+      tags:
+      - Admin
+  /admin/user/{id}:
+    delete:
+      description: Delete user by ID
+      parameters:
+      - description: Must be in UUID format
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Delete or Banned User for ADMIN role
+      tags:
+      - Admin
+    get:
+      description: Retrieve user details by ID
+      parameters:
+      - description: Must be in UUID format
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Get User By ID for ADMIN
+      tags:
+      - Admin
+    patch:
+      description: Restore a user by ID
+      parameters:
+      - description: Must be in UUID format
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Restore User for ADMIN role
+      tags:
+      - Admin
+  /admin/users:
+    delete:
+      description: Delete users by IDs
+      parameters:
+      - collectionFormat: csv
+        description: Must be in UUID format
+        in: query
+        items:
+          type: string
+        name: id
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Delete or Banned User for ADMIN role
+      tags:
+      - Admin
+    get:
+      description: Retrieve a list of all users as JSON
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Get Users array
+      tags:
+      - Admin
+    patch:
+      description: Restore users by IDs
+      parameters:
+      - collectionFormat: csv
+        description: Must be in UUID format
+        in: query
+        items:
+          type: string
+        name: id
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Restore Users for ADMIN role
+      tags:
+      - Admin
+  /admin/users/search:
+    get:
+      description: Retrieve a list of users as JSON based on search criteria
+      parameters:
+      - description: Search users by key
+        in: query
+        name: search
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Invalid query parameters
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: Get Users array
+      tags:
+      - Admin
+  /auth:
+    get:
+      description: To Check Your Access Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      security:
+      - Bearer: []
+      summary: To Authentication
+      tags:
+      - Middleware
+  /login:
+    post:
+      description: Responds with the access token
+      parameters:
+      - description: Login Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Login for all roles
+      tags:
+      - All
+  /logout:
+    delete:
+      description: Logout users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Logout User for all roles
+      tags:
+      - All
+  /refresh:
+    get:
+      description: Responds with a Refresh Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Get Refresh Token
+      tags:
+      - All
+  /register:
+    post:
+      description: Create new users
+      parameters:
+      - description: Register Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Register for all roles
+      tags:
+      - All
+  /user/{id}:
+    put:
+      description: Update user by ID
+      parameters:
+      - description: Update Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginUpdateRequest'
+      - description: Must be in UUID format
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request format
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Update User for all roles
+      tags:
+      - All
+  /user/{id}/todolist:
+    delete:
+      description: Retrieve a object Todolist as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: ID todolist
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Delete Todolist By ID
+      tags:
+      - Todolist
+    get:
+      description: Retrieve a object Todolist as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: ID todolist
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Get Todolist By ID
+      tags:
+      - Todolist
+    post:
+      description: Create New Todolist as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Object Todolist for Create Todolist
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.TodoListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Create New Todolist
+      tags:
+      - Todolist
+    put:
+      description: Update Todolist as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: ID Todolist
+        in: query
+        name: id
+        required: true
+        type: integer
+      - description: Object Todolist for Update Todolist
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.TodoListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Update Todolist
+      tags:
+      - Todolist
+  /user/{id}/todolists:
+    delete:
+      description: Retrieve a object Todolist as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - collectionFormat: csv
+        description: ID todolist
+        in: query
+        items:
+          type: integer
+        name: id
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Delete Todolist By ID
+      tags:
+      - Todolist
+    get:
+      description: Retrieve a list all Todolist as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Page Number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Get all Todolist array
+      tags:
+      - Todolist
+    post:
+      description: Create New Todolists as JSON
+      parameters:
+      - description: Must Be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Array Todolist for Create Many
+        in: body
+        name: request
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.TodoListRequest'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Create New Todolists
+      tags:
+      - Todolist
+  /user/{id}/todolists/s:
+    get:
+      description: Retrieve a list of all Todolist as JSON
+      parameters:
+      - description: Must be UUID Format
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: search keywords for task name, description
+        in: query
+        name: search
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.StandartResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ResponseErrors'
+      summary: Get Todolist array by search key
+      tags:
+      - Todolist
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
