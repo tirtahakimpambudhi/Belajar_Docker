@@ -1,0 +1,7 @@
+.env
+node_modules/
+README.md
+Dockerfile
+jsconfig.json
+build/
+bin/

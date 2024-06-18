@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  nginx_server:
+    image: nginx:stable-alpine3.19-perl
+    container_name: nginx_server
+    networks:
+      - loadbalance
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8081:80"
+    depends_on:
+      - server_one
+      - server_two
+  # Server 1
+  server_one:
+    container_name: server_one
+    networks:
+      - loadbalance
+    build: 
+      context: ./server/app_go
+      dockerfile: Dockerfile
+      args:
+        - APP_FILENAME=main
+    environment:
+      - APP_PORT=8081
+  # Server 2
+  server_two:
+    container_name: server_two
+    networks:
+      - loadbalance
+    build: 
+      context: ./server/app_js
+      dockerfile: Dockerfile
+      args:
+        - APP_FILENAME=index
+    env_file:
+      - ./server/app_js/.env
+
+
+
+networks:
+  loadbalance:
+    name: loadbalance

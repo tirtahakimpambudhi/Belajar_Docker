@@ -1,8 +1,10 @@
 # Documentasi Docker Compose File
 
 ## Services
+
 - Digunakan untuk menampung satu container atau lebih
 - Contoh Penggunaan
+
 ```yaml
 services:
     name_container_1:
@@ -12,7 +14,9 @@ services:
 ```
 
 ## Container
-- Contoh Penggunaan 
+
+- Contoh Penggunaan
+
 ```yaml
 services:
     name_container_1:
@@ -21,11 +25,13 @@ services:
 ```
 
 ## Ports
+
 - Target adalah port dari container
 - Publish adalah port yang ingin di publish di host
 - protocol terbagi 2 (tcp dan udp) default tcp
-- Terbagi 2 cara long syntax dan short syntax 
-- Long Syntax 
+- Terbagi 2 cara long syntax dan short syntax
+- Long Syntax
+
 ```yaml
 services:
     nginx_example_service:
@@ -36,7 +42,9 @@ services:
         published: 8081
         protocol: tcp
 ```
+
 - Short Syntax
+
 ```yaml
 services:
     nginx_example_service: 
@@ -48,7 +56,9 @@ services:
 ```
 
 ## Env
-- Contoh Penggunaan 
+
+- Contoh Penggunaan
+
 ```yaml
 services:
   mongodb_example_env:
@@ -63,11 +73,15 @@ services:
 ```
 
 ## Mount
+
 - source adalah path dari host atau nama volume
 - target adalah path dari container
 - mode ada 2 (readonly dan readwrite) default readwrite
+
 ### Bind
+
 #### Short Syntax
+
 ```yaml
 version: "3.9"
 
@@ -85,7 +99,9 @@ services:
     #source:target/mode
       - ../../../../../db/mongodb:/data/db:rw
 ```
+
 #### Long Syntax
+
 ```yaml
 version: "3.9"
 
@@ -109,6 +125,7 @@ services:
 ### Volume
 
 #### Short Syntax
+
 ```yaml
 version: "3.9"
 
@@ -129,7 +146,9 @@ volumes:
   mongo_data:
     name: "mongo_data"
 ```
+
 #### Long Syntax
+
 ```yaml
 version: "3.9"
 
@@ -152,10 +171,5 @@ volumes:
   mongo_data:
     name: "mongo_data"
 ```
+
 ## Network
-```yaml
-networks:
-  name_networks:
-    name: name_networks
-    drive: (bridge,none,host)
-```
