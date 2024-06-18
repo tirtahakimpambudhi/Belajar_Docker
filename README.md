@@ -1,6 +1,7 @@
 # Welcome to My Docker Command Repository!
 
 This repository contains a collection of useful Docker commands and guides to help you with Docker-related and K8s tasks.
+This repository contains a collection of useful Docker commands and guides to help you with Docker-related and K8s tasks.
 
 ## Contents
 
