@@ -17,4 +17,5 @@ This repository contains a collection of useful Docker commands and guides to he
 
 ## Source Reference 
 1. [K8s Templates](https://github.com/khannedy/belajar-kubernetes.git)
+2. [Image Reference](https://github.com/khannedy/belajar-kubernetes?tab=readme-ov-file)
 
