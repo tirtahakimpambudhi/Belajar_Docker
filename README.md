@@ -16,5 +16,10 @@ This repository contains a collection of useful Docker commands and guides to he
 10. [K8S Concepts Documentation](K8S_ARCH_CLUSTER.md)
 
 ## Source Reference 
+
+## Source Reference 
 1. [K8s Templates](https://github.com/khannedy/belajar-kubernetes.git)
+2. [Reference](https://github.com/khannedy/belajar-kubernetes?tab=readme-ov-file)
+
+
 
