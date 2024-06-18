@@ -1,32 +1,43 @@
 # Dockerfile
 
 ## Docker Build
+
 - untuk membuat image dari docker file
+
 ```bash
 docker build -t name_image folder_in_dockerfile_exist
 ```
-- Untuk Menampikan Output dari sebuah Dockerfile ketika jadi image 
+
+- Untuk Menampikan Output dari sebuah Dockerfile ketika jadi image
+
 ```bash
 docker build -t name_image folder_in_dockerfile_exist --progress=plain
 ```
-- Saat Proses build docker secara default menyimpan perubahan Dockerfile di cache jadi ketika anda mencoba build ulang tanpa ada perubahan docker tidak akan build ulang secara manual 
-- Akan tetapi tetapi ketika ingin build ulang secara manual pakai command 
+
+- Saat Proses build docker secara default menyimpan perubahan Dockerfile di cache jadi ketika anda mencoba build ulang tanpa ada perubahan docker tidak akan build ulang secara manual
+- Akan tetapi tetapi ketika ingin build ulang secara manual pakai command
+
 ```bash
 docker build -t name_image folder_in_dockerfile_exist --no-cache
 ```
 
 ## From Instructions
+
 - Digunakan untuk statment awal ketika ingin menggunakan image docker dari docker registry (docker hub)
 - Sebenarnya bisa tanpa 'FROM' Instruksi tapi jarang sekali orang yang memulai benar benar dari nol tanpa image dari docker hub
 - Contoh Penggunaan
+
 ```Dockerfile
 FROM image:tag
 ```
+
 - Ketika Penulisan tanpa default nya latest
 
 ## Run Insturctions
-- Digunakan ketika anda ingin menjalankan perintah saat proses build Dockerfile jadi image 
+
+- Digunakan ketika anda ingin menjalankan perintah saat proses build Dockerfile jadi image
 - Contoh Penggunaan yang Pertama
+
 ```Dockerfile
 FROM alpine:latest
 # RUN command argument
@@ -34,7 +45,9 @@ RUN mkdir app #untuk membuat directory
 RUN cd app/ #untuk masuk directory app
 RUN echo APP_ENV="deveploment" > .env
 ```
+
 - Contoh Penggunaan yang Kedua
+
 ```Dockerfile
 FROM alpine:latest
 # RUN ["command","argument","argument"]
@@ -42,10 +55,13 @@ RUN ["mkdir","app"]
 RUN ["cd","app"]
 RUN ["echo","APP_ENV='development'",">",".env"]
 ```
-## CMD Instructions 
+
+## CMD Instructions
+
 - Fungsi nya sama dengan 'RUN' Instruksi akan tetapi 'CMD' dijalankan ketika container sedang berjalan atau setiap perintah jalan nya container
 - Akan tetapi 'CMD' Instruksi hanya boleh satu jadi ketika ditulis lebih dari satu maka yang dijalankan yang paling akhir
 - Contoh Penggunaan Pertama
+
 ```Dockerfile
 FROM alpine:latest
 # RUN command argument
@@ -55,15 +71,16 @@ RUN echo APP_ENV="deveploment" > .env
 # CMD command argument
 CMD cat .env
 ```
+
 - Contoh Penggunaan Kedua
-```Dockerfile
-FROM alpine:latest
-# RUN ["command","argument","argument"]
-RUN ["mkdir","app"]
+
 RUN ["cd","app"]
 RUN ["echo","APP_ENV='development'",">",".env"]
+
 # CMD ["command","argument","argument"]
+
 CMD ["cat",".env"]
+
 ```
 
 ## Label Insturctions
@@ -80,10 +97,11 @@ LABEL github="https://github.com/example" email="example@gmail.com"
 CMD echo "Label Instruksi"
 ```
 
-
 ## Add Instructions
-- Add Instruksi digunakan untuk menambahkan file dari source ke destination 
+
+- Add Instruksi digunakan untuk menambahkan file dari source ke destination
 - source nya bisa berupa file dari host , url. Dan jika file nya berupa archive akan di ekstrak secara otomatis di destionation nya. Dan jika berupa url akan download secara otomatis juga
+
 ```Dockerfile
 FROM alpine:latest
 # ADD source destination
@@ -94,8 +112,10 @@ CMD echo file.txt
 ```
 
 ## Copy Instructions
+
 - Fungsi dari Copy instruksi persis dengan add tapi hanya bisa benar-benar copy file source ke destination dan tidak memiliki fitur lain nya
 - Best Practice Programmer Docker biasa nya pakai COPY. Sebisa mungkin Pakai COPY
+
 ```Dockerfile
 FROM alpine:latest
 # COPY source destination
@@ -106,13 +126,16 @@ CMD echo file.txt
 ```
 
 ## .dockerignore
+
 - Fungsi dari .dockerignore persis sama dengan .gitignore yaitu mengignore file-file yang ditulis . Jadi saat build Dockerfile ke image sebenarnya yang di load pertama kali .dockerignore agar dilihat file file apa saja yang di ignore.
-- Alasan ada nya .dockerignore untuk mengignore file tertentu saat melakukan ADD atau COPY instruksi agar file - file tertentu tidak ikut ke build jadi image 
+- Alasan ada nya .dockerignore untuk mengignore file tertentu saat melakukan ADD atau COPY instruksi agar file - file tertentu tidak ikut ke build jadi image
 
 ## Expose Instructions
+
 - Berfungsi untuk menambah detail informasi atau dokumentasi bahwa image tersebut berjalan di port sekian
 - Sebernarnya Expose instruksi tidak berpengaruh image tersebut harus berjalan di port itu hanya bersifat dokumentasi saja.
 - Contoh Penggunaan
+
 ```Dockerfile
 FROM golang:1.18-alpine
 
@@ -125,8 +148,10 @@ CMD go run app/main.go
 ```
 
 ## Env Instructions
+
 - Berfungsi menambahkan enviroment variabel di image tersebut. Dan enviroment variabel tersebut bisa dirubah ketika saat pembuatan container memakai flag ```-e atau --env```
 - Berfungsi ketika container sedang berjalan atau running.
+
 ```Dockerfile
 FROM golang:1.18-alpine
 # Single env
@@ -141,9 +166,11 @@ CMD go run app/main.go
 ```
 
 ## Volume Instructions
-- Berfungsi untuk membuat volume secara otomatis saat membuat container 
+
+- Berfungsi untuk membuat volume secara otomatis saat membuat container
 - Semua isi file yang di deklarasikan di volume Dockerfile akan di copy di docker volume yang dibuat secara otomatis tadi
 - Contoh Pertama
+
 ```Dockerfile
 FROM golang:1.18-alpine
 # Single env
@@ -161,8 +188,10 @@ VOLUME ${APP_LOG} app/temp/log
 EXPOSE ${APP_PORT}
 CMD go run app/main.go
 ```
+
 - ```VOLUME /path_container #untuk mounting```
-- Contoh Kedua 
+- Contoh Kedua
+
 ```Dockerfile
 FROM golang:1.18-alpine
 # Single env
@@ -182,9 +211,11 @@ CMD go run app/main.go
 ```
 
 ## Workdir Instructions
-- Seperti namanya 'WORKDIR' instruksi digunakan untuk mengubah direktori dimana program akan dijalankan. 'WORKDIR' instruksi juga berfungsi sebagai default direktori ketika kita masuk container pertama kali. 
+
+- Seperti namanya 'WORKDIR' instruksi digunakan untuk mengubah direktori dimana program akan dijalankan. 'WORKDIR' instruksi juga berfungsi sebagai default direktori ketika kita masuk container pertama kali.
 - Jika direktory tersebut tidak  ada maka autocreate jadi hati-hati dalam penggunaan nya
--  Cara Penggunaan nya seperti perintah ```bash cd ``` akan sedikit berbeda .
+- Cara Penggunaan nya seperti perintah ```bash cd``` akan sedikit berbeda .
+
 ```Dockerfile
 FROM golang:1.18-alpine
 # Single env
@@ -198,13 +229,16 @@ COPY . .
 EXPOSE ${APP_PORT}
 CMD go run main.go
 ```
+
 - Jika kita perintah ```WORKDIR app/test``` maka kedua folder tersebut meski tidak ada tetap autocreate sehingga workdir nya app/test
-- Jika kita perintah lagi ``` WORKDIR /etc``` maka workdir nya berubah /etc
+- Jika kita perintah lagi ```WORKDIR /etc``` maka workdir nya berubah /etc
 
 ## User Instructions
+
 - Berfungsi untuk menggunakan user atau ganti user .
 - User Instruksi berguna ketika anda hanya menginjinkan folder tersebut di jalankan oleh user tertentu
 - Contoh Penggunaan
+
 ```Dockerfile
 FROM golang:1.22-alpine
 
@@ -237,9 +271,11 @@ CMD go test ./test -v
 ```
 
 ## Arg Instructiions
-- Berfungsi mendefinisikan variabel yang digunnakan oleh pengguna dan bisa di kirim saat build time menggunakann ``` --build-arg key-value```
+
+- Berfungsi mendefinisikan variabel yang digunnakan oleh pengguna dan bisa di kirim saat build time menggunakann ```--build-arg key-value```
 - Arg instruksi hanya berfungsi ketika build time, Jadi ketika container berjalan Arg instruksi tidak gunakan lagi alias sudah hilang . Kebalikan dari Env instruksi
 - Cara penggunaan persis dengan Env instruksi
+
 ```Dockerfile
 FROM golang:1.22.0-alpine
 ARG APP_FILENAME="main"
@@ -256,14 +292,16 @@ CMD go run ${APP_NAME}.go
 ```
 
 ## Health Check Instructions
-- Berfungsi memberitahukan bahwa container sedang baik baik saja atau tidak 
-- ```HEALTHCHECK [OPTIONS] CMD ```
+
+- Berfungsi memberitahukan bahwa container sedang baik baik saja atau tidak
+- ```HEALTHCHECK [OPTIONS] CMD```
 - OPTIONS
   - --interval=DURATION (30s) untuk jeda waktu setiap health check nya di jalankan
   - --timeout=DURATION (30s) batas waktu pengecek an health check
-  - --start-period=DURATION (0s) jeda setelah jalan nya aplikasi  dan container kita 
+  - --start-period=DURATION (0s) jeda setelah jalan nya aplikasi  dan container kita
   - --retries=N (3) pengulangan health check ketika error berapa kali dijalankan untuk memastikan benar benar error
 - Contoh Penggunaan
+
 ```Dockerfile
 FROM golang:1.22.0-alpine
 ARG APP_FILENAME="main"
@@ -279,12 +317,15 @@ VOLUME ${APP_LOG}
 CMD go run ${APP_NAME}.go
 HEALTHCHECK --interval=10s --timeout=60s --start-period=10s --retries=3 CMD curl http://localhost:${APP_PORT}/health
 ```
+
 ## Multi Stage
-- Berfungsi ketika membutuh kan lebih dari 1 stage dan beda image 
+
+- Berfungsi ketika membutuh kan lebih dari 1 stage dan beda image
 - Jadi Misal anda ingin menggunakan image alpine tetapi anda memiliki aplikasi golang maka anda butuh multi stage
-- Bagaimana implementasi ? Mudah 
+- Bagaimana implementasi ? Mudah
   aplikasi anda yang ingin di jalankan di alpine atau image lain dibuat binary file terlebih dahulu yang stage nya memiliki image sesuai aplikasi anda setelah itu dipindahkan di di stage yang image nya alpine
 - Contoh Penggunaan
+
 ```Dockerfile
 FROM golang:1.22.0-alpine as build
 ARG APP_FILENAME="main"

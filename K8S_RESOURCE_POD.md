@@ -114,3 +114,23 @@ spec:
       - containerPort: 80
 
 ```
+
+## Menghapus Pods 
+
+```bash
+kubectl po namepod
+#or
+kubectl po namepod1 namepod2 namepod3
+```
+
+### Menggunakan Labels
+
+```bash
+kubectl po -l key=value
+```
+
+### Menghapus Semua Pods di Namespace
+
+```bash
+kubectl delete po --all --namespace namanamespace
+```

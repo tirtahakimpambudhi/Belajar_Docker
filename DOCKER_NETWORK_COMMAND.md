@@ -1,6 +1,7 @@
 # Docker Network
 
 ## Docker Driver
+
 - Bridge Ini adalah driver jaringan default untuk Docker.
 Bridge network memungkinkan kontainer berkomunikasi satu sama lain pada host yang sama.
 Setiap kontainer di jaringan bridge mendapatkan alamat IP yang dapat diakses secara lokal di host.
@@ -25,19 +26,25 @@ Kontainer yang menggunakan driver none tidak memiliki antarmuka jaringan yang te
 Biasanya digunakan untuk kasus uji coba atau skenario di mana Anda ingin mengisolasi kontainer sepenuhnya dari jaringan.
 
 ## Melihat Network
+
 ```bash
 docker network ls
 ```
+
 ## Membuat Network
+
 ```bash
 docker create --driver driver(bridge,host,none,etc) name_network
 ```
+
 ## Menghapus Network
+
 ```bash
 docker network rm name_network # jika network sudah digunakan container maka hapus container nya terlebih dahulu
 ```
 
 ## Container Network Bridge
+
 ```bash
 # Agar Container bisa saling berkomunikasi kita harus di hubungkan dalam satu network bridge
 # Contoh Implementasi 
@@ -61,11 +68,13 @@ docker container create --name mongo_express_admin_ct --network mongodb_network 
 ```
 
 ## Menghapus Koneksi container dengan network
-```bash 
+
+```bash
 docker network disconnect name_network name_container
 ```
 
-## Menambahkan Koneksi container ke network 
+## Menambahkan Koneksi container ke network
+
 ```bash
 docker network connect name_network name_container
 ```
