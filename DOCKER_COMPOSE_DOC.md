@@ -173,3 +173,10 @@ volumes:
 ```
 
 ## Network
+```yaml
+networks:
+  name_networks:
+    name: name_networks
+    drive: (bridge,none,host)
+```
+
