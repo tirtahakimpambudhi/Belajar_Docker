@@ -56,12 +56,6 @@ spec:
     image: myimage
 ```
 
-### Dengan CLI
-
-```bash
-kubectl create -f pod_file.yaml --namespace namanamespace
-```
-
 ## Selector Pods Menggunakan Namespace
 
 - Secara default saat kita command ```bash kubectl get po``` akan mengarah ke namespace bawaan dan namanya biasa nya default.
@@ -79,4 +73,12 @@ kubectl get po -namespace namespace
 
 ```bash
 kubectl delete ns namespace
+```
+
+## Melihat List Namespaces
+
+```bash
+kubectl get ns
+kubectl get namespace
+kubectl get namespaces
 ```
